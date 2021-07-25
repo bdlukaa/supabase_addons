@@ -3,6 +3,22 @@
 /// More dartdocs go here.
 library supabase_addons;
 
-export 'src/supabase_addons_base.dart';
+import 'package:supabase/supabase.dart';
 
-// TODO: Export any libraries intended for clients of this package.
+import 'auth/auth_addons.dart';
+
+class SupabaseAddons {
+  const SupabaseAddons._();
+
+  /// The supabase client used
+  static late SupabaseClient client;
+
+  /// Initialize the addons
+  static void initialize({
+    required SupabaseClient client,
+    String storagePath = '/',
+  }) {
+    SupabaseAddons.client = client;
+    SupabaseAuthAddons.intialize(storagePath: storagePath);
+  }
+}
