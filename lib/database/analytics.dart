@@ -73,19 +73,3 @@ class SupabaseAnalyticsAddons {
     });
   }
 }
-
-class SupabaseStatisticsPrinter {
-  void printStatistics(DateTime since) async {
-    final mse = since.millisecondsSinceEpoch;
-    final response = await SupabaseAddons.client
-        .from(SupabaseAnalyticsAddons.tableName)
-        .select()
-        .gte('timestamp', mse)
-        .execute();
-    if (response.error != null) {
-      throw response.error!;
-    } else {
-      print(response.data);
-    }
-  }
-}
