@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:hive/hive.dart';
 import 'package:supabase/supabase.dart';
+import 'package:supabase_addons/database/analytics.dart';
 
 import '../supabase_addons.dart';
 
@@ -14,12 +15,19 @@ class SupabaseAuthAddons {
   /// Get the auth client from the current SupabaseClient
   static GoTrueClient get auth => SupabaseAddons.client.auth;
 
-  /// Intiailize the auth addons
+  /// Intiailize the auth addons.
+  /// 
+  /// This must be called only once on the app
   static void intialize({required String storagePath}) async {
     Hive.init(storagePath);
     await Hive.openBox(_boxName);
     // ignore: unawaited_futures
     recoverPersistedSession();
+    auth.onAuthStateChange((event, session) {
+      if (event == AuthChangeEvent.signedIn) {
+        SupabaseAnalyticsAddons.logUserSession();
+      }
+    });
   }
 
   /// Persist the current user session on the disk
