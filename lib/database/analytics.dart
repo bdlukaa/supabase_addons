@@ -21,6 +21,8 @@ import '../auth/auth_addons.dart';
 /// ```
 class SupabaseAnalyticsAddons {
   static bool _isInitialized = false;
+
+  /// Check if the analytics addon is initialized.
   static bool get isInitialized => _isInitialized;
 
   static late String _analyticsTableName;
@@ -33,15 +35,18 @@ class SupabaseAnalyticsAddons {
   static void initialize({
     String tableName = 'analytics',
     bool useLoggedUserInfo = true,
+    bool logUserSignIn = true,
   }) {
     _analyticsTableName = tableName;
     _useLoggedUserInfo = useLoggedUserInfo;
     _isInitialized = true;
-    _authListener = SupabaseAuthAddons.onAuthStateChange.listen((event) {
-      if (event == AuthChangeEvent.signedIn) {
-        SupabaseAnalyticsAddons.logUserSession();
-      }
-    });
+    if (logUserSignIn) {
+      _authListener = SupabaseAuthAddons.onAuthStateChange.listen((event) {
+        if (event == AuthChangeEvent.signedIn) {
+          SupabaseAnalyticsAddons.logUserSession();
+        }
+      });
+    }
   }
 
   static void dispose() {

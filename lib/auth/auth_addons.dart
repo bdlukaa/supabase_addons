@@ -3,7 +3,6 @@ import 'dart:convert';
 
 import 'package:hive/hive.dart';
 import 'package:supabase/supabase.dart';
-import 'package:supabase_addons/database/analytics.dart';
 
 import '../supabase_addons.dart';
 

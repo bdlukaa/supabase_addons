@@ -13,15 +13,29 @@ import 'database/analytics.dart';
 export 'auth/auth_addons.dart';
 export 'database/analytics.dart';
 
+/// The Supabase Addons
+///
+/// See also:
+///
+///   * [SupabaseAuthAddons], the addons to supabase authentication
+///   * [SupabaseAnalyticsAddons], an addon that adds analytics to
+///     the supabase database.
 class SupabaseAddons {
   const SupabaseAddons._();
 
-  /// The supabase client used
+  /// The supabase client used by the addons.
   static late SupabaseClient client;
 
+  /// The current system locale.
+  ///
+  /// This is used by the analytics addon to analyze the users country.
   static late String systemLocale;
 
-  /// Initialize the addons
+  /// Initialize some basic addons
+  ///
+  /// The following addons are initialized on this method:
+  ///
+  ///   * [SupabaseAuthAddons]
   static Future<void> initialize({
     required SupabaseClient client,
     String storagePath = '.',
@@ -29,12 +43,14 @@ class SupabaseAddons {
     systemLocale = await findSystemLocale();
     SupabaseAddons.client = client;
     SupabaseAuthAddons.intialize(storagePath: storagePath);
-    SupabaseAnalyticsAddons.initialize();
   }
 
+  /// Dispose all the addons.
+  ///
+  /// All of them addons are disposed on this method. If they
+  /// we not initialized, nothing will happen.
   static void dispose() {
     SupabaseAuthAddons.dispose();
     SupabaseAnalyticsAddons.dispose();
   }
-
 }
