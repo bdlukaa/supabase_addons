@@ -1,5 +1,5 @@
 name: supabase_addons
-description: A starting point for Dart libraries or applications.
+description: Addons to supabase dart (and Flutter), to make development easier.
 version: 0.0.1+1
 repository: https://github.com/bdlukaa/supabase_addons
 
