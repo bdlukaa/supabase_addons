@@ -42,11 +42,11 @@ class SupabaseAddons {
   ///   * [SupabaseAuthAddons]
   static Future<void> initialize({
     required SupabaseClient client,
-    String storagePath = '.',
+    String authPersistencePath = './auth',
   }) async {
     systemLocale = await findSystemLocale();
     SupabaseAddons.client = client;
-    SupabaseAuthAddons.intialize(storagePath: storagePath);
+    await SupabaseAuthAddons.intialize(storagePath: authPersistencePath);
   }
 
   /// Dispose all the addons.

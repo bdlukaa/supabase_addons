@@ -23,6 +23,8 @@ Supabase is an open source Firebase alternative. It has support for auth, databa
 
 - [Get started](#get-started)
 - [Auth Addons](#auth-addons)
+  - [How it works?](#how-it-works)
+  - [Change the storage path](#change-the-storage-path)
 - [Analytics](#analytics)
   - [Getting started](#get-started-with-analytics)
   - [Log an event](#log-an-event)
@@ -54,9 +56,8 @@ import 'package:supabase_addons/supabase_addons.dart';
 First of all, we need to init the addons:
 
 ```dart
-SupabaseAddons.initialize(
+await SupabaseAddons.initialize(
   client: SupabaseClient(SUPABASE_URL, SUPABASE_SECRET),
-  storagePath: './auth'
 );
 ```
 
@@ -69,6 +70,36 @@ SupabaseAddons.dispose();
 ## Auth Addons
 
 The auth addon is able to persist the user session into the device storage. It is backed by [hive](https://pub.dev/packages/hive), a lightweight and blazing fast key-value database written in pure Dart
+
+### How it works?
+
+The user session is persisted on the device everytime the user signs in or is updated. When the user signs out, the session is removed from the device.
+
+This behavior is enabled by default when `SupabaseAddons.initialize` is called. To disable it, call `SupabaseAuthAddons.dispose()`. Once disabled, it can't be turned on anymore
+
+### Change the storage path
+
+When initializing the addons, you can change the `storagePath` to the location you'd like:
+
+```dart
+SupabaseAddons.initialize(
+  ...,
+  authPersistencePath: './auth'
+);
+```
+
+If you're in a Flutter environment, you can use the package [path_provider](https://pub.dev/packages/path_provider) to get the application documents path:
+
+```dart
+import 'package:path_provider/path_provider.dart';
+
+final dir = await getApplicationDocumentsDirectory()
+
+SupabaseAddons.initialize(
+  ...,
+  authPersistencePath: '${dir.path}/auth'
+);
+```
 
 ## Analytics
 
