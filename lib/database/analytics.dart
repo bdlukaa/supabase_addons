@@ -1,11 +1,11 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:supabase/supabase.dart';
 
 import '../supabase_addons.dart';
 
 import '../auth/auth_addons.dart';
+import '../utils.dart';
 
 /// Implements analytics in Supabase. The analytics addons
 ///
@@ -116,7 +116,7 @@ class SupabaseAnalyticsAddons {
   static Future<void> logUserSession() {
     return logEvent(name: 'user_session', params: {
       'country_code': userCountry,
-      'os': Platform.operatingSystem,
+      'os': operatingSystem,
     });
   }
 }
