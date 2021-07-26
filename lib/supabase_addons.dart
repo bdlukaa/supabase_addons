@@ -9,9 +9,11 @@ import 'package:intl/intl_standalone.dart'
 
 import 'auth/auth_addons.dart';
 import 'database/analytics.dart';
+import 'database/crashlytics.dart';
 
 export 'auth/auth_addons.dart';
 export 'database/analytics.dart';
+export 'database/crashlytics.dart';
 
 /// The Supabase Addons
 ///
@@ -20,6 +22,8 @@ export 'database/analytics.dart';
 ///   * [SupabaseAuthAddons], the addons to supabase authentication
 ///   * [SupabaseAnalyticsAddons], an addon that adds analytics to
 ///     the supabase database.
+///   * [SupabaseCrashlyticsAddons], an addon that adds crashlytics
+///     to the supabase database.
 class SupabaseAddons {
   const SupabaseAddons._();
 
@@ -52,5 +56,6 @@ class SupabaseAddons {
   static void dispose() {
     SupabaseAuthAddons.dispose();
     SupabaseAnalyticsAddons.dispose();
+    SupabaseCrashlyticsAddons.dispose();
   }
 }
