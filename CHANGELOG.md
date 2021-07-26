@@ -3,3 +3,4 @@
 - `SupabaseAddons`
   - `SupabaseAuthAddons`
   - `SupabaseAnalyticsAddons`
+  - `SupabaseCrashlyticsAddons`
