@@ -9,7 +9,7 @@ import '../auth/auth_addons.dart';
 
 /// Implements analytics in Supabase. The analytics addons
 ///
-/// Creating the analytics table:
+/// Creating the `analytics` table:
 ///
 /// ```sql
 /// create table public.analytics (
@@ -20,22 +20,36 @@ import '../auth/auth_addons.dart';
 /// );
 /// ```
 class SupabaseAnalyticsAddons {
+  const SupabaseAnalyticsAddons._();
+
   static bool _isInitialized = false;
 
   /// Check if the analytics addon is initialized.
   static bool get isInitialized => _isInitialized;
 
-  static late String _analyticsTableName;
+  static String _analyticsTableName = 'analytics';
+
+  /// The table name used by the Analytics Addon. The default table
+  /// name is `analytics`
   static String get tableName => _analyticsTableName;
   static bool _useLoggedUserInfo = true;
 
   static StreamSubscription<AuthChangeEvent>? _authListener;
+
+  /// The user country code.
+  ///
+  /// This is used by the `user_session` event.
+  ///
+  /// If not provided when initialized, the country is defined based
+  /// on the device language
+  static String? userCountry;
 
   /// Initialize the analytics addons
   static void initialize({
     String tableName = 'analytics',
     bool useLoggedUserInfo = true,
     bool logUserSignIn = true,
+    String? userCountry,
   }) {
     _analyticsTableName = tableName;
     _useLoggedUserInfo = useLoggedUserInfo;
@@ -47,8 +61,20 @@ class SupabaseAnalyticsAddons {
         }
       });
     }
+
+    String? _getUserCountry() {
+      final splitList = SupabaseAddons.systemLocale.split('_');
+      String? country_code;
+      if (splitList.length >= 2) {
+        country_code = splitList[1].toLowerCase();
+      }
+      return country_code;
+    }
+
+    SupabaseAnalyticsAddons.userCountry = userCountry ?? _getUserCountry();
   }
 
+  /// Dispose the addon to free up resources.
   static void dispose() {
     _authListener?.cancel();
   }
@@ -61,6 +87,10 @@ class SupabaseAnalyticsAddons {
     Map<String, dynamic> params = const {},
     String? userId,
   }) async {
+    assert(
+      name.length >= 2,
+      'The name must be at least 2 characters long',
+    );
     final response =
         await SupabaseAddons.client.from(_analyticsTableName).insert({
       'name': name.replaceAll(' ', '_'),
@@ -84,10 +114,8 @@ class SupabaseAnalyticsAddons {
   ///
   /// This can be useful to check where the users mostly use your app.
   static Future<void> logUserSession() {
-    final country_code =
-        SupabaseAddons.systemLocale.split('_').last.toLowerCase();
     return logEvent(name: 'user_session', params: {
-      'country_code': country_code,
+      'country_code': userCountry,
       'os': Platform.operatingSystem,
     });
   }

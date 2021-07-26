@@ -16,6 +16,27 @@ class SupabaseAuthAddons {
   static GoTrueClient get auth => SupabaseAddons.client.auth;
 
   static final _authController = StreamController<AuthChangeEvent>.broadcast();
+
+  /// The auth event stream.
+  ///
+  /// ```dart
+  /// SupabaseAuthAddons.onAuthStateChange.listen((event) {
+  ///   switch (event) {
+  ///     case AuthChangeEvent.signedIn:
+  ///       // handle sign in
+  ///       break;
+  ///     case AuthChangeEvent.signedOut:
+  ///       // handle sign out
+  ///       break;
+  ///     case AuthChangeEvent.userUpdated:
+  ///       // handle user updated
+  ///       break;
+  ///     case AuthChangeEvent.passwordRecovery:
+  ///       // handle password recovery
+  ///       break;
+  ///   }
+  /// });
+  /// ```
   static Stream<AuthChangeEvent> get onAuthStateChange =>
       _authController.stream;
 
@@ -32,6 +53,10 @@ class SupabaseAuthAddons {
     });
   }
 
+  /// Dispose the addon to free up resources.
+  ///
+  /// The [onAuthStateChange] stream can not be used after this
+  /// method is called.
   static void dispose() {
     _authController.close();
   }
