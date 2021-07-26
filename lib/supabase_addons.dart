@@ -31,4 +31,10 @@ class SupabaseAddons {
     SupabaseAuthAddons.intialize(storagePath: storagePath);
     SupabaseAnalyticsAddons.initialize();
   }
+
+  static void dispose() {
+    SupabaseAuthAddons.dispose();
+    SupabaseAnalyticsAddons.dispose();
+  }
+
 }

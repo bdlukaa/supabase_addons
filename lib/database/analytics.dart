@@ -1,4 +1,7 @@
+import 'dart:async';
 import 'dart:io';
+
+import 'package:supabase/supabase.dart';
 
 import '../supabase_addons.dart';
 
@@ -24,6 +27,8 @@ class SupabaseAnalyticsAddons {
   static String get tableName => _analyticsTableName;
   static bool _useLoggedUserInfo = true;
 
+  static StreamSubscription<AuthChangeEvent>? _authListener;
+
   /// Initialize the analytics addons
   static void initialize({
     String tableName = 'analytics',
@@ -32,6 +37,15 @@ class SupabaseAnalyticsAddons {
     _analyticsTableName = tableName;
     _useLoggedUserInfo = useLoggedUserInfo;
     _isInitialized = true;
+    _authListener = SupabaseAuthAddons.onAuthStateChange.listen((event) {
+      if (event == AuthChangeEvent.signedIn) {
+        SupabaseAnalyticsAddons.logUserSession();
+      }
+    });
+  }
+
+  static void dispose() {
+    _authListener?.cancel();
   }
 
   /// Log an event

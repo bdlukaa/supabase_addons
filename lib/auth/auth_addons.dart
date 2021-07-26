@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:hive/hive.dart';
@@ -15,8 +16,12 @@ class SupabaseAuthAddons {
   /// Get the auth client from the current SupabaseClient
   static GoTrueClient get auth => SupabaseAddons.client.auth;
 
+  static final _authController = StreamController<AuthChangeEvent>.broadcast();
+  static Stream<AuthChangeEvent> get onAuthStateChange =>
+      _authController.stream;
+
   /// Intiailize the auth addons.
-  /// 
+  ///
   /// This must be called only once on the app
   static void intialize({required String storagePath}) async {
     Hive.init(storagePath);
@@ -24,10 +29,12 @@ class SupabaseAuthAddons {
     // ignore: unawaited_futures
     recoverPersistedSession();
     auth.onAuthStateChange((event, session) {
-      if (event == AuthChangeEvent.signedIn) {
-        SupabaseAnalyticsAddons.logUserSession();
-      }
+      _authController.add(event);
     });
+  }
+
+  static void dispose() {
+    _authController.close();
   }
 
   /// Persist the current user session on the disk
