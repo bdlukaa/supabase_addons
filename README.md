@@ -4,11 +4,11 @@
     <a title="Discord" href="https://discord.gg/674gpDQUVq">
       <img src="https://img.shields.io/discord/809528329337962516?label=discord&logo=discord" />
     </a>
-    <a title="Pub" href="https://pub.dartlang.org/packages/fluent_ui" >
-      <img src="https://img.shields.io/pub/v/fluent_ui.svg?style=popout&include_prereleases" />
+    <a title="Pub" href="https://pub.dartlang.org/packages/supabase_addons" >
+      <img src="https://img.shields.io/pub/v/supabase_addons.svg?style=popout&include_prereleases" />
     </a>
     <a title="Github License">
-      <img src="https://img.shields.io/github/license/bdlukaa/fluent_ui" />
+      <img src="https://img.shields.io/github/license/bdlukaa/supabase_addons" />
     </a>
     <a title="PRs are welcome">
       <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" />
