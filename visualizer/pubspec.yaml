@@ -11,6 +11,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  supabase: ^0.0.6
+  flutter_svg:
 
 dev_dependencies:
   flutter_test:
