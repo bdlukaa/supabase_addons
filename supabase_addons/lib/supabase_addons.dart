@@ -40,12 +40,14 @@ class SupabaseAddons {
   /// The following addons are initialized on this method:
   ///
   ///   * [SupabaseAuthAddons]
+  ///   * [SupabaseAnalyticsAddons]
   static Future<void> initialize({
     required SupabaseClient client,
     String authPersistencePath = './auth',
   }) async {
     systemLocale = await findSystemLocale();
     SupabaseAddons.client = client;
+    SupabaseAnalyticsAddons.initialize();
     await SupabaseAuthAddons.intialize(storagePath: authPersistencePath);
   }
 

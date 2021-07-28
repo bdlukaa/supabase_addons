@@ -13,7 +13,7 @@ import '../utils.dart';
 ///
 /// ```sql
 /// create table public.analytics (
-///   name text not null,
+///   name text not null primary key,
 ///   params json,
 ///   user_id text,
 ///   timestamp text
@@ -62,16 +62,7 @@ class SupabaseAnalyticsAddons {
       });
     }
 
-    String? _getUserCountry() {
-      final splitList = SupabaseAddons.systemLocale.split('_');
-      String? country_code;
-      if (splitList.length >= 2) {
-        country_code = splitList[1].toLowerCase();
-      }
-      return country_code;
-    }
-
-    SupabaseAnalyticsAddons.userCountry = userCountry ?? _getUserCountry();
+    SupabaseAnalyticsAddons.userCountry = userCountry;
   }
 
   /// Dispose the addon to free up resources.
@@ -91,6 +82,7 @@ class SupabaseAnalyticsAddons {
       name.length >= 2,
       'The name must be at least 2 characters long',
     );
+
     final response =
         await SupabaseAddons.client.from(_analyticsTableName).insert({
       'name': name.replaceAll(' ', '_'),
@@ -114,9 +106,19 @@ class SupabaseAnalyticsAddons {
   ///
   /// This can be useful to check where the users mostly use your app.
   static Future<void> logUserSession() {
+    print('session');
     return logEvent(name: 'user_session', params: {
-      'country_code': userCountry,
+      'country_code': userCountry ?? _getUserCountry(),
       'os': operatingSystem,
     });
+  }
+
+  static String? _getUserCountry() {
+    final splitList = SupabaseAddons.systemLocale.split('_');
+    String? country_code;
+    if (splitList.length >= 2) {
+      country_code = splitList[1].toLowerCase();
+    }
+    return country_code;
   }
 }

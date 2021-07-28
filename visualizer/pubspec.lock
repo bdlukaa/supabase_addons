@@ -43,6 +43,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.15.0"
+  country_provider:
+    dependency: "direct main"
+    description:
+      name: country_provider
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.2"
   crypto:
     dependency: transitive
     description:
@@ -50,6 +57,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.1"
+  enum_to_string:
+    dependency: transitive
+    description:
+      name: enum_to_string
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.1"
+  equatable:
+    dependency: transitive
+    description:
+      name: equatable
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.3"
   fake_async:
     dependency: transitive
     description:
@@ -57,13 +78,27 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.0"
+  fl_chart:
+    dependency: "direct main"
+    description:
+      name: fl_chart
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.36.3"
+  flag:
+    dependency: "direct main"
+    description:
+      name: flag
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.0.1"
   flutter:
     dependency: "direct main"
     description: flutter
     source: sdk
     version: "0.0.0"
   flutter_svg:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: flutter_svg
       url: "https://pub.dartlang.org"
@@ -95,6 +130,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.0"
+  intl:
+    dependency: "direct main"
+    description:
+      name: intl
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.17.0"
   jwt_decode:
     dependency: transitive
     description:
@@ -172,6 +214,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.6"
+  shimmer:
+    dependency: "direct main"
+    description:
+      name: shimmer
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
   sky_engine:
     dependency: transitive
     description: flutter
