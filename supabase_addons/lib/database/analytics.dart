@@ -106,7 +106,6 @@ class SupabaseAnalyticsAddons {
   ///
   /// This can be useful to check where the users mostly use your app.
   static Future<void> logUserSession() {
-    print('session');
     return logEvent(name: 'user_session', params: {
       'country_code': userCountry ?? _getUserCountry(),
       'os': operatingSystem,

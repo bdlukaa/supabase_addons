@@ -167,7 +167,8 @@ create table public.crashlytics (
   stackTraceElements json,
   reason text,
   fatal bool,
-  timestamp text
+  timestamp text,
+  version text
 );
 ```
 

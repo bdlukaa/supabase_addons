@@ -35,6 +35,8 @@ class SupabaseAddons {
   /// This is used by the analytics addon to analyze the users country.
   static late String systemLocale;
 
+  static String? appVersion;
+
   /// Initialize some basic addons
   ///
   /// The following addons are initialized on this method:
@@ -44,9 +46,11 @@ class SupabaseAddons {
   static Future<void> initialize({
     required SupabaseClient client,
     String authPersistencePath = './auth',
+    String? appVersion,
   }) async {
     systemLocale = await findSystemLocale();
     SupabaseAddons.client = client;
+    SupabaseAddons.appVersion = appVersion;
     SupabaseAnalyticsAddons.initialize();
     await SupabaseAuthAddons.intialize(storagePath: authPersistencePath);
   }

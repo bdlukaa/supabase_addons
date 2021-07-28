@@ -14,7 +14,8 @@ import '../supabase_addons.dart';
 ///   stackTraceElements json,
 ///   reason text,
 ///   fatal bool,
-///   timestamp text
+///   timestamp text,
+///   version text
 /// );
 /// ```
 ///
@@ -80,6 +81,7 @@ class SupabaseCrashlyticsAddons {
       'reason': reason,
       'fatal': fatal,
       'timestamp': DateTime.now().millisecondsSinceEpoch,
+      'version': SupabaseAddons.appVersion,
     }).execute();
 
     if (result.error != null) {

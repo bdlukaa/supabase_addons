@@ -9,6 +9,7 @@ void main() async {
   // Intialize the addons
   await SupabaseAddons.initialize(
     client: SupabaseClient(SUPABASE_URL, SUPABASE_SECRET),
+    appVersion: '0.1.0'
   );
   SupabaseCrashlyticsAddons.initialize();
 
