@@ -70,6 +70,8 @@ class _DemographicsChartState extends State<DemographicsChart> {
       }
     }
 
+    // TODO: Initially, see only 5, but add a button to see all the rest
+
     int total = 0;
     for (int users in countries.values) {
       total += users;
@@ -77,7 +79,10 @@ class _DemographicsChartState extends State<DemographicsChart> {
     return Card(
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 12.0),
-        width: maxWidth,
+        constraints: BoxConstraints(
+          // maxHeight: 286.0,
+          maxWidth: maxWidth,
+        ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -227,18 +232,7 @@ class _PlatformsChartState extends State<PlatformsChart> {
         width: maxWidth,
         margin: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 12.0),
         child: Column(children: [
-          Row(children: [
-            Expanded(
-              child: Text(
-                'Platforms',
-                style: Theme.of(context).textTheme.headline6,
-              ),
-            ),
-            Text(
-              'Total of ${NumberFormat.compactLong().format(total)}',
-              textAlign: TextAlign.end,
-            ),
-          ]),
+          _headline('Platforms', total),
           Row(mainAxisSize: MainAxisSize.min, children: [
             Expanded(
               child: Column(
@@ -278,8 +272,7 @@ class _PlatformsChartState extends State<PlatformsChart> {
                         return PieChartSectionData(
                           color: colors[os],
                           value: used.toDouble(),
-                          title:
-                              '${(100 / platforms.values.length).toStringAsPrecision(2)}%',
+                          title: '${(100 / (total / used)).toStringAsFixed(2)}%',
                           radius: radius,
                           titleStyle: TextStyle(fontSize: fontSize),
                           badgeWidget: _Badge(
