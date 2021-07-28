@@ -1,0 +1,1 @@
+Helps you to analize the data collected by `supabase_addons`. You can analize your project here: <https://bdlukaa.github.io/supabase_addons/>

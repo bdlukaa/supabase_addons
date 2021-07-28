@@ -12,20 +12,26 @@ class Root extends StatefulWidget {
 }
 
 class _RootState extends State<Root> {
+  bool _refresh = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(12),
-            child: Image.asset('assets/supabase_logo.png'),
-          ),
+          child: Image.asset('assets/supabase_logo.png'),
         ),
         title: Text('Supabase visualizer'),
         actions: [
-          if (hasClient)
+          if (hasClient) ...[
+            // TODO: get Refresh button working
+            IconButton(
+              icon: Icon(Icons.refresh),
+              onPressed: () {},
+              tooltip: 'Refresh',
+              splashRadius: 20.0,
+            ),
             Container(
               alignment: Alignment.center,
               margin: EdgeInsets.symmetric(horizontal: 10.0),
@@ -36,6 +42,7 @@ class _RootState extends State<Root> {
                 },
               ),
             ),
+          ],
         ],
       ),
       body:

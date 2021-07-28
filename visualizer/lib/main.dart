@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_strategy/url_strategy.dart';
 
+import 'constants.dart';
 import 'screens/root.dart';
 
 void main() {
@@ -15,20 +16,21 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Supabase Visualizer',
       theme: ThemeData.dark().copyWith(
-        primaryColor: Color(0xFF3ecf8e),
+        primaryColor: kPrimaryColor,
         appBarTheme: AppBarTheme(
           elevation: 0.0,
           backgroundColor: Colors.transparent,
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            primary: Color(0xFF3ecf8e),
+            primary: kPrimaryColor,
             visualDensity: VisualDensity.standard,
           ),
         ),
         tabBarTheme: TabBarTheme(
           indicatorSize: TabBarIndicatorSize.label,
         ),
+        scaffoldBackgroundColor: kBackgroundColor,
       ),
       themeMode: ThemeMode.dark,
       debugShowCheckedModeBanner: false,
