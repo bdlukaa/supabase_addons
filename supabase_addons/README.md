@@ -113,7 +113,7 @@ Create a table called `analytics` on the database:
 
 ```sql
 create table public.analytics (
-  name text not null primary key,
+  name text not null,
   params json,
   user_id text,
   timestamp text

@@ -13,7 +13,7 @@ import '../utils.dart';
 ///
 /// ```sql
 /// create table public.analytics (
-///   name text not null primary key,
+///   name text not null,
 ///   params json,
 ///   user_id text,
 ///   timestamp text
@@ -51,9 +51,6 @@ class SupabaseAnalyticsAddons {
     bool logUserSignIn = true,
     String? userCountry,
   }) {
-    _analyticsTableName = tableName;
-    _useLoggedUserInfo = useLoggedUserInfo;
-    _isInitialized = true;
     if (logUserSignIn) {
       _authListener = SupabaseAuthAddons.onAuthStateChange.listen((event) {
         if (event == AuthChangeEvent.signedIn) {
@@ -63,6 +60,9 @@ class SupabaseAnalyticsAddons {
     }
 
     SupabaseAnalyticsAddons.userCountry = userCountry;
+    _analyticsTableName = tableName;
+    _useLoggedUserInfo = useLoggedUserInfo;
+    _isInitialized = true;
   }
 
   /// Dispose the addon to free up resources.
@@ -87,13 +87,16 @@ class SupabaseAnalyticsAddons {
         await SupabaseAddons.client.from(_analyticsTableName).insert({
       'name': name.replaceAll(' ', '_'),
       'params': params,
+      'timestamp': '${DateTime.now().millisecondsSinceEpoch}',
       if (userId != null || _useLoggedUserInfo)
         'user_id': userId ?? SupabaseAuthAddons.auth.currentUser?.id,
-      'timestamp': '${DateTime.now().millisecondsSinceEpoch}',
-    }).execute();
+    }, returning: ReturningOption.minimal).execute();
 
     if (response.error != null) {
+      print(response.error!.message);
       throw response.error!;
+    } else {
+      print(response.data);
     }
   }
 

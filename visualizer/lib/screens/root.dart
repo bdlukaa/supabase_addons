@@ -20,7 +20,7 @@ class _RootState extends State<Root> {
           padding: const EdgeInsets.all(8.0),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(12),
-            child: Image.asset('supabase_logo.png'),
+            child: Image.asset('assets/supabase_logo.png'),
           ),
         ),
         title: Text('Supabase visualizer'),

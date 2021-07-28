@@ -16,13 +16,18 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
   @override
   void initState() {
     super.initState();
+    loadData();
   }
 
   void loadData() {
     getData(
       'user_session',
       DateTime.now().subtract(Duration(days: 7)),
-    ).then((value) => user_session = value);
+    ).then((value) {
+      setState(() => user_session = value);
+    }).catchError((error) {
+      print(error);
+    });
   }
 
   Future<List<Map<String, dynamic>>> getData(
@@ -45,10 +50,8 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
   @override
   Widget build(BuildContext context) {
     return Wrap(children: [
-      if (user_session != null) ...[
-        DemographicsChart(data: user_session!),
-        PlatformsChart(data: user_session!),
-      ],
+      DemographicsChart(data: user_session),
+      PlatformsChart(data: user_session),
     ]);
   }
 }

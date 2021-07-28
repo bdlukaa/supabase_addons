@@ -8,10 +8,30 @@ import 'package:intl/intl.dart';
 
 import '../../../../utils.dart';
 
+Widget _headline(String title, [int? total]) {
+  return Builder(builder: (context) {
+    return Row(children: [
+      Expanded(
+        child: Text(
+          title,
+          style: Theme.of(context).textTheme.headline6,
+        ),
+      ),
+      if (total != null)
+        Text(
+          'Total of ${NumberFormat.compactLong().format(total)}',
+          textAlign: TextAlign.end,
+        )
+      else
+        CircularProgressIndicator(),
+    ]);
+  });
+}
+
 class DemographicsChart extends StatefulWidget {
   const DemographicsChart({Key? key, required this.data}) : super(key: key);
 
-  final List<Map<String, dynamic>> data;
+  final List<Map<String, dynamic>>? data;
 
   @override
   _DemographicsChartState createState() => _DemographicsChartState();
@@ -22,11 +42,24 @@ class _DemographicsChartState extends State<DemographicsChart> {
 
   @override
   Widget build(BuildContext context) {
+    final maxWidth = MediaQuery.of(context).size.width;
+
+    if (widget.data == null) {
+      return Card(
+        child: Container(
+          width: maxWidth,
+          padding: EdgeInsets.all(16.0),
+          alignment: Alignment.center,
+          child: _headline('Demographics'),
+        ),
+      );
+    }
+
     Map<String, int> countries = {
-      'br': 30,
-      'us': 150,
+      // 'br': 30,
+      // 'us': 150,
     };
-    for (final info in widget.data) {
+    for (final info in widget.data!) {
       final code = info['params']['country_code'];
       if (code != null) {
         if (countries.containsKey(code)) {
@@ -41,8 +74,6 @@ class _DemographicsChartState extends State<DemographicsChart> {
     for (int users in countries.values) {
       total += users;
     }
-
-    final maxWidth = MediaQuery.of(context).size.width;
     return Card(
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 12.0),
@@ -51,18 +82,7 @@ class _DemographicsChartState extends State<DemographicsChart> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(children: [
-              Expanded(
-                child: Text(
-                  'Demographics',
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-              ),
-              Text(
-                'Total of ${NumberFormat.compactLong().format(total)}',
-                textAlign: TextAlign.end,
-              ),
-            ]),
+            _headline('Demographics', total),
             ...List.generate(countries.length, (index) {
               final String code = countries.keys.toList()[index];
               final int used = countries[code]!;
@@ -136,7 +156,7 @@ class _DemographicsChartState extends State<DemographicsChart> {
 class PlatformsChart extends StatefulWidget {
   const PlatformsChart({Key? key, required this.data}) : super(key: key);
 
-  final List<Map<String, dynamic>> data;
+  final List<Map<String, dynamic>>? data;
 
   @override
   _PlatformsChartState createState() => _PlatformsChartState();
@@ -165,15 +185,28 @@ class _PlatformsChartState extends State<PlatformsChart> {
 
   @override
   Widget build(BuildContext context) {
+    final maxWidth = 370.0;
+
+    if (widget.data == null) {
+      return Card(
+        child: Container(
+          width: maxWidth,
+          padding: EdgeInsets.all(16.0),
+          alignment: Alignment.center,
+          child: _headline('Platforms'),
+        ),
+      );
+    }
+
     Map<String, int> platforms = {
-      'android': 50,
-      'ios': 50,
-      'macos': 10,
-      'windows': 10,
-      'linux': 10,
-      'web': 100,
+      // 'android': 50,
+      // 'ios': 50,
+      // 'macos': 10,
+      // 'windows': 10,
+      // 'linux': 10,
+      // 'web': 100,
     };
-    for (final info in widget.data) {
+    for (final info in widget.data!) {
       final code = info['params']['os'];
       if (code != null) {
         if (platforms.containsKey(code)) {
@@ -191,7 +224,7 @@ class _PlatformsChartState extends State<PlatformsChart> {
 
     return Card(
       child: Container(
-        width: 370,
+        width: maxWidth,
         margin: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 12.0),
         child: Column(children: [
           Row(children: [
@@ -219,9 +252,9 @@ class _PlatformsChartState extends State<PlatformsChart> {
                       pieTouchData:
                           PieTouchData(touchCallback: (pieTouchResponse) {
                         setState(() {
-                          final desiredTouch =
-                              pieTouchResponse.touchInput is! PointerExitEvent &&
-                                  pieTouchResponse.touchInput is! PointerUpEvent;
+                          final desiredTouch = pieTouchResponse.touchInput
+                                  is! PointerExitEvent &&
+                              pieTouchResponse.touchInput is! PointerUpEvent;
                           if (desiredTouch &&
                               pieTouchResponse.touchedSection != null) {
                             touchedIndex = pieTouchResponse
@@ -239,7 +272,7 @@ class _PlatformsChartState extends State<PlatformsChart> {
                         final fontSize = isTouched ? 20.0 : 16.0;
                         final radius = isTouched ? 110.0 : 100.0;
                         final badgeSize = isTouched ? 55.0 : 40.0;
-    
+
                         final String os = platforms.keys.toList()[index];
                         final int used = platforms[os]!;
                         return PieChartSectionData(

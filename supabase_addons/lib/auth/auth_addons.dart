@@ -45,7 +45,11 @@ class SupabaseAuthAddons {
   static Future<void> intialize({required String storagePath}) async {
     Hive.init(storagePath);
     await Hive.openBox(_boxName);
+    _initListeners();
     await recoverPersistedSession();
+  }
+
+  static void _initListeners() {
     auth.onAuthStateChange((event, session) {
       _authController.add(event);
     });
@@ -97,7 +101,11 @@ class SupabaseAuthAddons {
       if (response.error != null) {
         return false;
       } else {
-        return response.data is Session;
+        final valid = response.data is Session;
+        if (valid) {
+          _authController.add(AuthChangeEvent.signedIn);
+        }
+        return valid;
       }
     }
     return false;
