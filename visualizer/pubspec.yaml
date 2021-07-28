@@ -22,7 +22,15 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_native_splash: ^1.2.0
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/
 
+flutter_native_splash:
+  color: "#1c1c1c"
+  image: 'assets/supabase_logo.png'
+  android: false
+  ios: false

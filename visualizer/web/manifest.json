@@ -3,7 +3,7 @@
     "short_name": "Visualizer",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#3ecf8e",
+    "background_color": "#1e1e1e",
     "theme_color": "#3ecf8e",
     "description": "Flutter developers analize their apps performance with Supabase.",
     "orientation": "portrait-primary",

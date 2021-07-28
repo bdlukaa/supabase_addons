@@ -16,8 +16,13 @@ class _RootState extends State<Root> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Image.network(
-            'https://github.com/supabase/supabase/blob/3c347ee5462ae589bde64e5f5d9780f69fdd1fe6/www/public/favicon/favicon-32x32.png?raw=true'),
+        leading: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: Image.asset('supabase_logo.png'),
+          ),
+        ),
         title: Text('Supabase visualizer'),
         actions: [
           if (hasClient)
