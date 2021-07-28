@@ -1,5 +1,5 @@
 name: visualizer
-description: An app to visualize and manage your Supabase statistics
+description: Flutter developers analize their apps performance with Supabase.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
@@ -11,6 +11,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  url_strategy: ^0.2.0
   supabase: ^0.0.6
   shimmer: ^2.0.0
   fl_chart: ^0.36.3
