@@ -7,13 +7,6 @@ class IntroductionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final arrowStyle = Theme.of(context).textTheme.bodyText1?.copyWith(
-          color: Theme.of(context).disabledColor,
-        );
-    final arrow = TextSpan(
-      text: ' then ',
-      style: arrowStyle!.copyWith(),
-    );
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Row(children: [
         Expanded(

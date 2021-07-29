@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/link.dart';
+
 import 'package:visualizer/constants.dart';
 import 'package:visualizer/models/session.dart';
 
@@ -32,6 +33,15 @@ class _RootState extends State<Root> {
           ),
         ]),
         actions: [
+          Link(
+            uri: Uri.parse(projectRepository),
+            target: LinkTarget.blank,
+            builder: (context, followLink) => IconButton(
+              icon: ImageIcon(AssetImage('assets/github_logo.png'), size: 30.0),
+              splashRadius: 20.0,
+              onPressed: followLink,
+            ),
+          ),
           Container(
             alignment: Alignment.center,
             margin: EdgeInsets.symmetric(horizontal: 10.0),
