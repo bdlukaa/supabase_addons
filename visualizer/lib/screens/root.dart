@@ -12,8 +12,6 @@ class Root extends StatefulWidget {
 }
 
 class _RootState extends State<Root> {
-  bool _refresh = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

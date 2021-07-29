@@ -24,7 +24,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
       'user_session',
       DateTime.now().subtract(Duration(days: 7)),
     ).then((value) {
-      setState(() => user_session = value);
+      if (mounted) setState(() => user_session = value);
     }).catchError((error) {
       print(error);
     });

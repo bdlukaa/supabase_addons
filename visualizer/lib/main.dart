@@ -10,13 +10,14 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Supabase Visualizer',
       theme: ThemeData.dark().copyWith(
+        scaffoldBackgroundColor: kBackgroundColor,
         primaryColor: kPrimaryColor,
+        indicatorColor: kPrimaryColor,
         appBarTheme: AppBarTheme(
           elevation: 0.0,
           backgroundColor: Colors.transparent,
@@ -27,10 +28,7 @@ class MyApp extends StatelessWidget {
             visualDensity: VisualDensity.standard,
           ),
         ),
-        tabBarTheme: TabBarTheme(
-          indicatorSize: TabBarIndicatorSize.label,
-        ),
-        scaffoldBackgroundColor: kBackgroundColor,
+        tabBarTheme: TabBarTheme(indicatorSize: TabBarIndicatorSize.label),
       ),
       themeMode: ThemeMode.dark,
       debugShowCheckedModeBanner: false,
