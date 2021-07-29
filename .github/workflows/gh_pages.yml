@@ -3,9 +3,6 @@ on:
   push:
     branches:
       - master
-  pull_request:
-    branches:
-      - master
 
 jobs:
   build:
@@ -21,7 +18,7 @@ jobs:
         run: flutter pub get
         working-directory: ./visualizer
       - name: Build Web
-        run: flutter build web --release --source-maps
+        run: flutter build web --release # --source-maps
         working-directory: ./visualizer
       - name: Deploy
         run: |
