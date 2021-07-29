@@ -95,8 +95,6 @@ class SupabaseAnalyticsAddons {
     if (response.error != null) {
       print(response.error!.message);
       throw response.error!;
-    } else {
-      print(response.data);
     }
   }
 
