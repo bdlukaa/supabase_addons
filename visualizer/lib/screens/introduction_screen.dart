@@ -1,4 +1,6 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class IntroductionScreen extends StatelessWidget {
   const IntroductionScreen({Key? key}) : super(key: key);
@@ -45,27 +47,32 @@ class IntroductionScreen extends StatelessWidget {
             text: 'How to get my Supabase URL and Annon Key?\n',
             style: Theme.of(context).textTheme.headline6,
           ),
-          TextSpan(text: 'Open your Supabase project'),
-          arrow,
-          TextSpan(text: 'go to Settings'),
-          arrow,
-          TextSpan(text: 'click on API and'),
-          arrow,
           TextSpan(
-            // text: 'copy "URL" and "annon public"',
-            text: 'copy ',
+            text: '   1. Go to ',
             children: [
               TextSpan(
-                text: 'URL',
-                style: TextStyle(color: Colors.blue),
+                text: 'Supabase App',
+                mouseCursor: SystemMouseCursors.click,
+                recognizer: TapGestureRecognizer()..onTap = () {
+                  launch('https://app.supabase.io/');
+                },
+                style: TextStyle(
+                  color: Colors.blue,
+                  decoration: TextDecoration.underline,
+                ),
               ),
-              TextSpan(text: ' and '),
-              TextSpan(
-                text: 'annon public',
-                style: TextStyle(color: Colors.blue),
-              ),
+              TextSpan(text: '\n'),
             ],
           ),
+          TextSpan(text: '   2. Select your project\n'),
+          TextSpan(text: '   3. Go to "Settings"\n'),
+          TextSpan(text: '   4. Select "API"\n'),
+          TextSpan(text: '   5. Under "Config", copy "URL"\n'),
+          TextSpan(text: '   6. Under "API Keys", copy "annon" "public"\n'),
+          TextSpan(
+              text:
+                  '   7. Paste both values in their respective slot in the left\n'),
+          TextSpan(text: '   8. Enjoy'),
         ]),
       ),
     ]);

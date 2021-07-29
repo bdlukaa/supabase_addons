@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:url_strategy/url_strategy.dart';
 
 import 'constants.dart';
+import 'screens/documentation/root.dart';
 import 'screens/root.dart';
 
 void main() {
@@ -14,6 +15,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Supabase Visualizer',
+      initialRoute: '/',
+      routes: {
+        '/': (_) => Root(),
+        '/documentation': (_) => Documentation(),
+      },
       theme: ThemeData.dark().copyWith(
         colorScheme: ColorScheme.dark(
           primary: kPrimaryColor,
@@ -40,7 +46,6 @@ class MyApp extends StatelessWidget {
       ),
       themeMode: ThemeMode.dark,
       debugShowCheckedModeBanner: false,
-      home: Root(),
     );
   }
 }

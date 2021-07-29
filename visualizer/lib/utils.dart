@@ -9,3 +9,14 @@ Widget WrapWithShimmer({required Widget child}) {
     child: child,
   );
 }
+
+Widget get kBackButton {
+  return Builder(
+    builder: (context) => IconButton(
+      icon: Icon(Icons.arrow_back),
+      onPressed: () => Navigator.pop(context),
+      tooltip: MaterialLocalizations.of(context).backButtonTooltip,
+      splashRadius: 20.0,
+    ),
+  );
+}

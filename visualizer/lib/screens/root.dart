@@ -37,7 +37,9 @@ class _RootState extends State<Root> {
             margin: EdgeInsets.symmetric(horizontal: 10.0),
             child: OutlinedButton(
               child: Text('Documentation'),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushNamed('/documentation');
+              },
             ),
           ),
           if (hasClient) ...[
