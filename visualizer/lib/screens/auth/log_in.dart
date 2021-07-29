@@ -32,23 +32,26 @@ class _LogInState extends State<LogIn> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       child: Form(
-        child: Builder(
-          builder: (context) => Column(
+        child: Builder(builder: (context) {
+          return Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Center(
-                child: Text(
-                  'Add your Supabase Client',
+                child: SelectableText(
+                  'Insert your Supabase Client',
                   style: Theme.of(context).textTheme.headline4,
                   textAlign: TextAlign.center,
                 ),
               ),
               Container(
-                constraints: BoxConstraints(maxWidth: fieldSize),
+                constraints: const BoxConstraints(maxWidth: fieldSize),
                 child: TextFormField(
                   controller: urlController,
-                  decoration: InputDecoration(labelText: 'Supabase URL'),
+                  decoration: InputDecoration(
+                    labelText: 'Supabase URL',
+                    focusColor: Theme.of(context).focusColor,
+                  ),
                   textInputAction: TextInputAction.next,
                   validator: (text) {
                     if (text == null || text.isEmpty)
@@ -89,8 +92,8 @@ class _LogInState extends State<LogIn> {
                 ),
               ),
             ],
-          ),
-        ),
+          );
+        }),
       ),
     );
   }

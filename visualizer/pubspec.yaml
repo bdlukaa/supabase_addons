@@ -12,6 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   url_strategy: ^0.2.0
+  url_launcher: ^6.0.9
   supabase: ^0.0.6
   shimmer: ^2.0.0
   fl_chart: ^0.36.3

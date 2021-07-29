@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/link.dart';
+import 'package:visualizer/constants.dart';
 import 'package:visualizer/models/session.dart';
 
 import 'auth/log_in.dart';
 import 'client/root.dart';
+import 'introduction_screen.dart';
 
 class Root extends StatefulWidget {
   const Root({Key? key}) : super(key: key);
@@ -20,8 +23,23 @@ class _RootState extends State<Root> {
           padding: const EdgeInsets.all(8.0),
           child: Image.asset('assets/supabase_logo.png'),
         ),
-        title: Text('Supabase visualizer'),
+        title: Row(children: [
+          SelectableText('Supabase Addons Visualizer'),
+          const SizedBox(width: 6.0),
+          Chip(
+            label: SelectableText('Alpha'),
+            backgroundColor: Colors.redAccent,
+          ),
+        ]),
         actions: [
+          Container(
+            alignment: Alignment.center,
+            margin: EdgeInsets.symmetric(horizontal: 10.0),
+            child: OutlinedButton(
+              child: Text('Documentation'),
+              onPressed: () {},
+            ),
+          ),
           if (hasClient) ...[
             // TODO: get Refresh button working
             IconButton(
@@ -43,8 +61,47 @@ class _RootState extends State<Root> {
           ],
         ],
       ),
-      body:
-          !hasClient ? LogIn(onUpdate: () => setState(() {})) : LoggedClient(),
+      body: () {
+        if (hasClient) return LoggedClient();
+        return Row(children: [
+          Expanded(child: LogIn(onUpdate: () => setState(() {}))),
+          VerticalDivider(),
+          Expanded(child: IntroductionScreen()),
+        ]);
+      }(),
+      bottomNavigationBar: Container(
+        height: 40.0,
+        color: const Color(0xFF818cf8),
+        child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          const SizedBox(width: 26.0),
+          Link(
+            uri: Uri.parse(discordLink),
+            builder: (context, followLink) => ElevatedButton.icon(
+              icon: const Icon(Icons.arrow_back, size: 18.0),
+              label: const Text('Join my discord server'),
+              onPressed: followLink,
+              style: ElevatedButton.styleFrom(
+                primary: Color(0xFF312e81),
+                visualDensity: VisualDensity.compact,
+              ),
+            ),
+          ),
+          VerticalDivider(),
+          Link(
+            uri: Uri.parse(supabaseDiscordLink),
+            target: LinkTarget.blank,
+            builder: (context, followLink) => ElevatedButton(
+              child: Row(children: [
+                const Text('Join Supabase Discord server'),
+                const SizedBox(width: 4.0),
+                const Icon(Icons.arrow_forward, size: 18.0)
+              ]),
+              onPressed: followLink,
+              style: ButtonStyle(visualDensity: VisualDensity.compact),
+            ),
+          ),
+        ]),
+      ),
     );
   }
 }

@@ -15,6 +15,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Supabase Visualizer',
       theme: ThemeData.dark().copyWith(
+        colorScheme: ColorScheme.dark(
+          primary: kPrimaryColor,
+        ),
+        brightness: Brightness.dark,
         scaffoldBackgroundColor: kBackgroundColor,
         primaryColor: kPrimaryColor,
         indicatorColor: kPrimaryColor,
@@ -24,7 +28,11 @@ class MyApp extends StatelessWidget {
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            primary: kPrimaryColor,
+            visualDensity: VisualDensity.standard,
+          ),
+        ),
+        outlinedButtonTheme: OutlinedButtonThemeData(
+          style: OutlinedButton.styleFrom(
             visualDensity: VisualDensity.standard,
           ),
         ),

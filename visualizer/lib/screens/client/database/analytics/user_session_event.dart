@@ -19,7 +19,7 @@ Widget _headline(String title, [int? total]) {
       ),
       if (total != null)
         Text(
-          'Total of ${NumberFormat.compactLong().format(total)}',
+          'Total of ${NumberFormat.compactLong().format(total)} users',
           textAlign: TextAlign.end,
         )
       else
