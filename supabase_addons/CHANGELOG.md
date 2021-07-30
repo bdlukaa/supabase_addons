@@ -1,3 +1,7 @@
+## 0.0.4
+
+- Make it work on the web
+
 ## 0.0.3
 
 - A `signedIn` event is now fired when the user is fetched from storage
