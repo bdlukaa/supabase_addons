@@ -45,11 +45,15 @@ class _RootState extends State<Root> {
           Container(
             alignment: Alignment.center,
             margin: EdgeInsets.symmetric(horizontal: 10.0),
-            child: OutlinedButton(
-              child: Text('Documentation'),
-              onPressed: () {
-                Navigator.of(context).pushNamed('/documentation');
-              },
+            child: Link(
+              uri: Uri.parse(
+                'https://github.com/bdlukaa/supabase_addons/tree/master/supabase_addons',
+              ),
+              target: LinkTarget.blank,
+              builder: (context, followLink) => OutlinedButton(
+                child: Text('Documentation'),
+                onPressed: followLink,
+              ),
             ),
           ),
           if (hasClient) ...[

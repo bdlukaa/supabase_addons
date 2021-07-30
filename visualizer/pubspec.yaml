@@ -11,13 +11,18 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  # User Experience
   url_strategy: ^0.2.0
   url_launcher: ^6.0.9
-  supabase: ^0.0.6
+  # User Interface
   shimmer: ^2.0.0
+  sliver_tools: ^0.2.5
   fl_chart: ^0.36.3
   country_provider: ^1.0.2
   flag: ^5.0.1
+  # flutter_syntax_view: ^4.0.0
+  # Supabase and others
+  supabase: ^0.0.6
   intl: ^0.17.0
 
 dev_dependencies:

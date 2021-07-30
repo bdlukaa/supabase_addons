@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:url_strategy/url_strategy.dart';
 
 import 'constants.dart';
-import 'screens/documentation/root.dart';
 import 'screens/root.dart';
 
 void main() {
@@ -18,7 +17,6 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (_) => Root(),
-        '/documentation': (_) => Documentation(),
       },
       theme: ThemeData.dark().copyWith(
         colorScheme: ColorScheme.dark(

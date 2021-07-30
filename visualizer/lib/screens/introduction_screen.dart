@@ -12,8 +12,9 @@ class IntroductionScreen extends StatelessWidget {
         Expanded(
           child: SelectableText.rich(TextSpan(children: [
             TextSpan(
-                text: 'Welcome to\n',
-                style: Theme.of(context).textTheme.headline6),
+              text: 'Welcome to\n',
+              style: Theme.of(context).textTheme.headline6,
+            ),
             TextSpan(
               text: 'Supabase Addons',
               style: Theme.of(context).textTheme.headline5?.copyWith(
@@ -33,7 +34,7 @@ class IntroductionScreen extends StatelessWidget {
           width: 44,
         ),
       ]),
-      Divider(),
+      const Divider(),
       SelectableText.rich(
         TextSpan(children: [
           TextSpan(
@@ -46,9 +47,10 @@ class IntroductionScreen extends StatelessWidget {
               TextSpan(
                 text: 'Supabase App',
                 mouseCursor: SystemMouseCursors.click,
-                recognizer: TapGestureRecognizer()..onTap = () {
-                  launch('https://app.supabase.io/');
-                },
+                recognizer: TapGestureRecognizer()
+                  ..onTap = () {
+                    launch('https://app.supabase.io/');
+                  },
                 style: TextStyle(
                   color: Colors.blue,
                   decoration: TextDecoration.underline,
@@ -65,7 +67,7 @@ class IntroductionScreen extends StatelessWidget {
           TextSpan(
               text:
                   '   7. Paste both values in their respective slot in the left\n'),
-          TextSpan(text: '   8. Enjoy'),
+          TextSpan(text: '   8. Enjoy 🎉🥳'),
         ]),
       ),
     ]);
