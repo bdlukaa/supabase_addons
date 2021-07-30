@@ -49,7 +49,7 @@ class _RootState extends State<Root> {
             margin: EdgeInsets.symmetric(horizontal: 10.0),
             child: Link(
               uri: Uri.parse(
-                'https://github.com/bdlukaa/supabase_addons/tree/master/supabase_addons',
+                'https://github.com/bdlukaa/supabase_addons/tree/master/supabase_addons#supabase_addons',
               ),
               target: LinkTarget.blank,
               builder: (context, followLink) => OutlinedButton(
