@@ -40,6 +40,7 @@ class _RootState extends State<Root> {
               icon: ImageIcon(AssetImage('assets/github_logo.png'), size: 30.0),
               splashRadius: 20.0,
               onPressed: followLink,
+              tooltip: 'Source code',
             ),
           ),
           Container(
@@ -57,13 +58,14 @@ class _RootState extends State<Root> {
             ),
           ),
           if (hasClient) ...[
+            const VerticalDivider(indent: 10.0, endIndent: 10.0),
             // TODO: get Refresh button working
-            IconButton(
-              icon: Icon(Icons.refresh),
-              onPressed: () {},
-              tooltip: 'Refresh',
-              splashRadius: 20.0,
-            ),
+            // IconButton(
+            //   icon: Icon(Icons.refresh),
+            //   onPressed: () {},
+            //   tooltip: 'Refresh',
+            //   splashRadius: 20.0,
+            // ),
             Container(
               alignment: Alignment.center,
               margin: EdgeInsets.symmetric(horizontal: 10.0),

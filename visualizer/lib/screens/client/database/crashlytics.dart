@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:supabase/supabase.dart';
 import 'package:visualizer/models/session.dart';
 
+import '../../../constants.dart';
+import '../root.dart';
 import 'crashlytics/issues.dart';
 
 class Crashlytics extends StatefulWidget {
@@ -47,6 +50,31 @@ class _CrashlyticsState extends State<Crashlytics> {
 
   @override
   Widget build(BuildContext context) {
+    if (error != null) {
+      return Center(
+        child: SizedBox(
+          width: 500,
+          height: 500,
+          child: () {
+            if (error is PostgrestError) {
+              if (error.message == kInvalidCredentialsErrorMessage) {
+                return buildWrongCredentials();
+              }
+              if (error.code == kUndefinedTableErrorCode) {
+                return buildTableMissing(
+                  title: 'Crashlytics',
+                  tableName: 'crashlytics',
+                  link:
+                      'https://github.com/bdlukaa/supabase_addons/tree/master/supabase_addons#get-started-with-crashlytics',
+                );
+              }
+              return buildSomethingWentWrong(error);
+            }
+            return buildSomethingWentWrong();
+          }(),
+        ),
+      );
+    }
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Row(children: [
         Expanded(

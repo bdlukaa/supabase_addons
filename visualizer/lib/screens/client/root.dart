@@ -50,14 +50,14 @@ Widget buildSomethingWentWrong([PostgrestError? error]) {
         Row(mainAxisAlignment: MainAxisAlignment.center, children: [
           Icon(Icons.bug_report),
           SizedBox(width: 4.0),
-          Text(
+          SelectableText(
             'Something went wrong',
             style: Theme.of(context).textTheme.headline5,
             textAlign: TextAlign.center,
           ),
         ]),
         Divider(),
-        Text(
+        SelectableText(
           'An unexpected error happened while fetching your data',
           style: Theme.of(context).textTheme.subtitle1,
           textAlign: TextAlign.center,

@@ -53,30 +53,31 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (error != null)
+    if (error != null) {
       return Center(
         child: SizedBox(
           width: 500,
           height: 500,
           child: () {
             if (error is PostgrestError) {
-              // if (error.message == kInvalidCredentialsErrorMessage) {
-              //   return buildWrongCredentials();
-              // }
-              // if (error.code == kUndefinedTableErrorCode) {
-              //   return buildTableMissing(
-              //     title: 'Analytics',
-              //     tableName: 'analytics',
-              //     link:
-              //         'https://github.com/bdlukaa/supabase_addons/tree/master/supabase_addons#get-started-with-analytics',
-              //   );
-              // }
+              if (error.message == kInvalidCredentialsErrorMessage) {
+                return buildWrongCredentials();
+              }
+              if (error.code == kUndefinedTableErrorCode) {
+                return buildTableMissing(
+                  title: 'Analytics',
+                  tableName: 'analytics',
+                  link:
+                      'https://github.com/bdlukaa/supabase_addons/tree/master/supabase_addons#get-started-with-analytics',
+                );
+              }
               return buildSomethingWentWrong(error);
             }
             return buildSomethingWentWrong();
           }(),
         ),
       );
+    }
     return Wrap(children: [
       DemographicsChart(data: user_session),
       PlatformsChart(data: user_session),
