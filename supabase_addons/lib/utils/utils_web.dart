@@ -1,5 +1,1 @@
-import 'dart:html';
-
-String get operatingSystem {
-  return window.navigator.userAgent;
-}
+String get operatingSystem => 'web';
