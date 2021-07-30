@@ -12,6 +12,7 @@ class Crashlytics extends StatefulWidget {
 
 class _CrashlyticsState extends State<Crashlytics> {
   List<Map<String, dynamic>>? errors;
+  dynamic error;
 
   @override
   void initState() {
@@ -25,7 +26,7 @@ class _CrashlyticsState extends State<Crashlytics> {
     ).then((value) {
       if (mounted) setState(() => errors = value);
     }).catchError((error) {
-      print(error);
+      if (mounted) setState(() => this.error = error);
     });
   }
 
@@ -46,7 +47,6 @@ class _CrashlyticsState extends State<Crashlytics> {
 
   @override
   Widget build(BuildContext context) {
-    // print(errors);
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Row(children: [
         Expanded(

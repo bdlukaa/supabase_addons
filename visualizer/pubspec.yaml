@@ -20,7 +20,6 @@ dependencies:
   fl_chart: ^0.36.3
   country_provider: ^1.0.2
   flag: ^5.0.1
-  # flutter_syntax_view: ^4.0.0
   # Supabase and others
   supabase: ^0.0.6
   intl: ^0.17.0

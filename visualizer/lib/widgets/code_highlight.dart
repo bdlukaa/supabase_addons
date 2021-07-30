@@ -1,4 +1,66 @@
-// import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+class CodeSnippetFromImage extends StatefulWidget {
+  const CodeSnippetFromImage({
+    Key? key,
+    required this.imageUrl,
+    this.codeToCopy,
+  }) : super(key: key);
+
+  final String imageUrl;
+
+  final String? codeToCopy;
+
+  @override
+  _CodeSnippetFromImageState createState() => _CodeSnippetFromImageState();
+}
+
+class _CodeSnippetFromImageState extends State<CodeSnippetFromImage> {
+  bool showCopy = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 4.0),
+      child: MouseRegion(
+        onEnter: (_) => setState(() => showCopy = true),
+        onExit: (_) => setState(() => showCopy = false),
+        child: Stack(children: [
+          DecoratedBox(
+            decoration: BoxDecoration(
+              color: Theme.of(context).cardColor,
+              borderRadius: BorderRadius.circular(12.0),
+              boxShadow: kElevationToShadow[6],
+            ),
+            child: Image.network(widget.imageUrl, scale: 0.8,),
+          ),
+          if (widget.codeToCopy != null)
+            Positioned(
+              top: 3,
+              right: 3.5,
+              child: AnimatedOpacity(
+                duration: kThemeAnimationDuration,
+                opacity: showCopy ? 1 : 0,
+                child: Material(
+                  type: MaterialType.transparency,
+                  child: IconButton(
+                    icon: Icon(Icons.copy, size: 16.0),
+                    onPressed: () {
+                      Clipboard.setData(ClipboardData(text: widget.codeToCopy));
+                    },
+                    splashRadius: 20.0,
+                    tooltip: 'Copy to clipboard',
+                  ),
+                ),
+              ),
+            ),
+        ]),
+      ),
+    );
+  }
+}
+
 // import 'package:flutter/services.dart';
 
 // import 'package:flutter_syntax_view/src/syntax/index.dart';

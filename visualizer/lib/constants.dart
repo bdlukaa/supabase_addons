@@ -12,3 +12,8 @@ const Color kBackgroundColor = Color(0xFF1c1c1c);
 const String projectRepository = 'https://github.com/bdlukaa/supabase_addons';
 const String discordLink = 'https://discord.gg/674gpDQUVq/';
 const String supabaseDiscordLink = 'https://discord.supabase.io/';
+
+// Error codes
+
+const String kUndefinedTableErrorCode = '42P01';
+const String kInvalidCredentialsErrorMessage = 'Invalid authentication credentials';
