@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/link.dart';
 
-import 'package:visualizer/constants.dart';
-import 'package:visualizer/models/session.dart';
+import '../constants.dart';
+import '../models/session.dart';
 
 import 'auth/log_in.dart';
 import 'client/root.dart';
+
 import 'introduction_screen.dart';
 
 class Root extends StatefulWidget {

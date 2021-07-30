@@ -16,4 +16,5 @@ const String supabaseDiscordLink = 'https://discord.supabase.io/';
 // Error codes
 
 const String kUndefinedTableErrorCode = '42P01';
-const String kInvalidCredentialsErrorMessage = 'Invalid authentication credentials';
+const String kInvalidCredentialsErrorMessage =
+    'Invalid authentication credentials';

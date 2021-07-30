@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:supabase/supabase.dart';
-import 'package:visualizer/models/session.dart';
+
+import '../../models/session.dart';
 
 const double fieldSize = 500.0;
 

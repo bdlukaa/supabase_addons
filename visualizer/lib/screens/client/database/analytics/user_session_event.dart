@@ -272,7 +272,8 @@ class _PlatformsChartState extends State<PlatformsChart> {
                         return PieChartSectionData(
                           color: colors[os],
                           value: used.toDouble(),
-                          title: '${(100 / (total / used)).toStringAsFixed(2)}%',
+                          title:
+                              '${(100 / (total / used)).toStringAsFixed(2)}%',
                           radius: radius,
                           titleStyle: TextStyle(fontSize: fontSize),
                           badgeWidget: _Badge(

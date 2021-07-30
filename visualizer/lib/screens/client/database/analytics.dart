@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:supabase/supabase.dart';
-import 'package:visualizer/models/session.dart';
 
-import '../../../constants.dart';
 import '../root.dart';
+import '../../../constants.dart';
+import '../../../models/session.dart';
+
 import 'analytics/user_session_event.dart';
 
 class AnalyticsScreen extends StatefulWidget {
