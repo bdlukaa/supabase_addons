@@ -4,12 +4,12 @@
 library supabase_addons;
 
 import 'package:supabase/supabase.dart';
-import 'package:intl/intl_standalone.dart'
-    if (dart.html) 'package:intl/intl_browser.dart';
 
 import 'auth/auth_addons.dart';
 import 'database/analytics.dart';
 import 'database/crashlytics.dart';
+
+import 'utils.dart';
 
 export 'auth/auth_addons.dart';
 export 'database/analytics.dart';
@@ -48,7 +48,7 @@ class SupabaseAddons {
     String authPersistencePath = './auth',
     String? appVersion,
   }) async {
-    systemLocale = await findSystemLocale();
+    systemLocale = await getSystemLocale();
     SupabaseAddons.client = client;
     SupabaseAddons.appVersion = appVersion;
     SupabaseAnalyticsAddons.initialize();
