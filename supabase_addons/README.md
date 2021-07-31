@@ -29,6 +29,7 @@ Supabase is an open source Firebase alternative. It has support for auth, databa
   - [Getting started](#get-started-with-analytics)
   - [Log an event](#log-an-event)
   - [Auth events](#auth-events)
+  - [Built in events](#built--in-events)
 - [Crashlytics](#crashlytics)
   - [Getting started](#get-started-with-crashlytics)
   - [Toggle collection](#toggle-collection)
@@ -152,6 +153,19 @@ The `user_session` has some useful information on the params field:
 
 - `country_code`, the user country.
 - `os`, the user operating system. This is a `String` representing the operating system or platform. This is powered by (`Platform.operatingSystem`)
+
+### Built-in events
+
+This addon provides a lot of built-in events that can be analized in the analizer:
+
+| Name       | Params | Usage         | Notes |
+| ---------- | ------ | ------------- | ----- |
+| `purchase` | `affiliation`, `coupon`, `currency`, `items`, `shipping`, `tax`, `transactionId`, `value` | `logPurchase()` | An ` AssertionError` is thrown if the currency couldn't be fetched |
+| `refund`   | `affiliation`, `coupon`, `currency`, `items`, `shipping`, `tax`, `transactionId`, `value` | `logRefund()`   | An ` AssertionError` is thrown if the currency couldn't be fetched |
+| `ad_impression` | `format`, `provider` | `logAdImpression()` | |
+| `screen_view` | `screenClass`, `screenName` | `logScreenView` | This should be handled automatically if `supabase_addons_flutter` is used |
+| `search` | `term` (required), `params` | `logSearch()` | |
+| `select_item` | `item` (required) | `logSelectItem()` | |
 
 ## Crashlytics
 
