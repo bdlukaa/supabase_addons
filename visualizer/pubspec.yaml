@@ -21,7 +21,7 @@ dependencies:
   country_provider: ^1.0.2
   flag: ^5.0.1
   # Supabase and others
-  supabase: ^0.0.6
+  supabase: ^0.0.7
   intl: ^0.17.0
 
 dev_dependencies:

@@ -26,11 +26,14 @@ class _RootState extends State<Root> {
           child: Image.asset('assets/supabase_logo.png'),
         ),
         title: Row(children: [
-          SelectableText('Supabase Addons Visualizer'),
+          const SelectableText('Supabase Addons Visualizer'),
           const SizedBox(width: 6.0),
-          Chip(
-            label: SelectableText('Alpha'),
-            backgroundColor: Colors.redAccent,
+          const Tooltip(
+            message: 'This library is still in Alpha. Use it with caution',
+            child: Chip(
+              label: SelectableText('Alpha'),
+              backgroundColor: Colors.redAccent,
+            ),
           ),
         ]),
         actions: [
@@ -53,7 +56,7 @@ class _RootState extends State<Root> {
               ),
               target: LinkTarget.blank,
               builder: (context, followLink) => OutlinedButton(
-                child: Text('Documentation'),
+                child: const Text('Documentation'),
                 onPressed: followLink,
               ),
             ),
@@ -73,7 +76,7 @@ class _RootState extends State<Root> {
               child: ElevatedButton(
                 child: Text('Sign out'),
                 onPressed: () {
-                  setState(() => client = null);
+                  setState(() => signOut());
                 },
               ),
             ),
@@ -84,8 +87,8 @@ class _RootState extends State<Root> {
         if (hasClient) return LoggedClient();
         return Row(children: [
           Expanded(child: LogIn(onUpdate: () => setState(() {}))),
-          VerticalDivider(),
-          Expanded(child: IntroductionScreen()),
+          const VerticalDivider(),
+          const Expanded(child: IntroductionScreen()),
         ]);
       }(),
       bottomNavigationBar: Container(
@@ -105,7 +108,7 @@ class _RootState extends State<Root> {
               ),
             ),
           ),
-          VerticalDivider(),
+          const VerticalDivider(),
           Link(
             uri: Uri.parse(supabaseDiscordLink),
             target: LinkTarget.blank,

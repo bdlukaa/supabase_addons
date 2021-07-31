@@ -20,3 +20,13 @@ Widget get kBackButton {
     ),
   );
 }
+
+extension StringExtension on String {
+
+  String get firstLetterUpcased {
+    final firstLetter = substring(0, 1).toUpperCase();
+    final remaining = substring(1);
+    return '$firstLetter$remaining';
+  }
+
+}

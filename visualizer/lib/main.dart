@@ -30,17 +30,13 @@ class MyApp extends StatelessWidget {
           elevation: 0.0,
           backgroundColor: Colors.transparent,
         ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            visualDensity: VisualDensity.standard,
-          ),
-        ),
-        outlinedButtonTheme: OutlinedButtonThemeData(
-          style: OutlinedButton.styleFrom(
-            visualDensity: VisualDensity.standard,
-          ),
-        ),
         tabBarTheme: TabBarTheme(indicatorSize: TabBarIndicatorSize.label),
+        visualDensity: VisualDensity.standard,
+        tooltipTheme: TooltipThemeData(
+          height: 32.0,
+          padding: EdgeInsets.symmetric(horizontal: 12.0),
+          textStyle: TextStyle(fontSize: 14.0, color: Colors.black),
+        ),
       ),
       themeMode: ThemeMode.dark,
       debugShowCheckedModeBanner: false,

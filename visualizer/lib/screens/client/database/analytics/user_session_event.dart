@@ -19,7 +19,7 @@ Widget _headline(String title, [int? total]) {
       ),
       if (total != null)
         Text(
-          'Total of ${NumberFormat.compactLong().format(total)} users',
+          'Total of ${NumberFormat.compactLong().format(total)} sessions',
           textAlign: TextAlign.end,
         )
       else
@@ -91,7 +91,7 @@ class _DemographicsChartState extends State<DemographicsChart> {
             ...List.generate(countries.length, (index) {
               final String code = countries.keys.toList()[index];
               final int used = countries[code]!;
-              return Stack(alignment: Alignment.centerLeft, children: [
+              final bar = Stack(alignment: Alignment.centerLeft, children: [
                 Container(
                   height: 35,
                   width: maxWidth / (total / used),
@@ -150,6 +150,10 @@ class _DemographicsChartState extends State<DemographicsChart> {
                   ),
                 ),
               ]);
+              return Tooltip(
+                message: '$used sessions were registered in this country',
+                child: bar,
+              );
             }),
           ],
         ),
@@ -269,17 +273,21 @@ class _PlatformsChartState extends State<PlatformsChart> {
 
                         final String os = platforms.keys.toList()[index];
                         final int used = platforms[os]!;
+
+                        final usedPercentage = (100 / (total / used));
                         return PieChartSectionData(
                           color: colors[os],
                           value: used.toDouble(),
-                          title:
-                              '${(100 / (total / used)).toStringAsFixed(2)}%',
+                          title:'${NumberFormat('###.##').format(usedPercentage)}%',
                           radius: radius,
                           titleStyle: TextStyle(fontSize: fontSize),
-                          badgeWidget: _Badge(
-                            child: Icon(icons[os], color: colors[os]),
-                            size: badgeSize,
-                            borderColor: const Color(0xfff8b250),
+                          badgeWidget: Tooltip(
+                            message: '${platforms[os]} sessions were registered on this platform',
+                            child: _Badge(
+                              child: Icon(icons[os], color: colors[os]),
+                              size: badgeSize,
+                              borderColor: const Color(0xfff8b250),
+                            ),
                           ),
                           badgePositionPercentageOffset: .98,
                         );
@@ -301,12 +309,17 @@ class _PlatformsChartState extends State<PlatformsChart> {
                   'windows',
                   'linux',
                   'web',
+                  null,
                 ];
-                final os = OSs[index];
-                return Indicator(
-                  color: colors[os]!,
-                  text: os,
-                  textColor: Colors.white,
+                final os = OSs[index] ?? 'other';
+                return Tooltip(
+                  message:
+                      '${platforms.containsKey(os) ? platforms[os] : 'No'} sessions were registered on this platform',
+                  child: Indicator(
+                    color: colors[os]!,
+                    text: os.firstLetterUpcased,
+                    textColor: Colors.white,
+                  ),
                 );
               }),
             ),
