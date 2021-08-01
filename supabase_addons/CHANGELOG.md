@@ -1,3 +1,13 @@
+## 0.0.5
+
+- New built-in methods in analytics:
+  * purchase
+  * refund
+  * ad_impression
+  * screen_view
+  * search
+  * select_item
+
 ## 0.0.4
 
 - Make it work on the web
