@@ -5,6 +5,7 @@ import '../root.dart';
 import '../../../constants.dart';
 import '../../../models/session.dart';
 
+import 'analytics/danger_zone.dart';
 import 'analytics/user_session_event.dart';
 
 class AnalyticsScreen extends StatefulWidget {
@@ -79,9 +80,12 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
         ),
       );
     }
-    return Wrap(children: [
-      DemographicsChart(data: user_session),
-      PlatformsChart(data: user_session),
+    return ListView(padding: kListPadding, children: [
+      Wrap(children: [
+        DemographicsChart(data: user_session),
+        PlatformsChart(data: user_session),
+      ]),
+      AnalyticsDangerZone(),
     ]);
   }
 }

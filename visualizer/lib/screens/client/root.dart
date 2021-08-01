@@ -27,14 +27,11 @@ class _LoggedClientState extends State<LoggedClient> {
           ],
         ),
         Expanded(
-          child: Padding(
-            padding: EdgeInsets.all(20.0),
-            child: TabBarView(children: [
-              AnalyticsScreen(),
-              Crashlytics(),
-              Performance(),
-            ]),
-          ),
+          child: TabBarView(children: [
+            AnalyticsScreen(),
+            Crashlytics(),
+            Performance(),
+          ]),
         ),
       ]),
     );

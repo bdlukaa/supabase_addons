@@ -76,7 +76,7 @@ class _CrashlyticsState extends State<Crashlytics> {
         ),
       );
     }
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+    return ListView(padding: kListPadding, children: [
       Row(children: [
         Expanded(
           child: Column(
