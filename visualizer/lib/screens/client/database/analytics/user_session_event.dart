@@ -10,20 +10,25 @@ import '../../../../utils.dart';
 
 Widget _headline(String title, [int? total]) {
   return Builder(builder: (context) {
+    final formattedTotal = NumberFormat.compactLong().format(total);
     return Row(children: [
       Expanded(
-        child: Text(
+        child: SelectableText(
           title,
           style: Theme.of(context).textTheme.headline6,
         ),
       ),
       if (total != null)
-        Text(
-          'Total of ${NumberFormat.compactLong().format(total)} sessions',
+        SelectableText(
+          'Total of $formattedTotal sessions',
           textAlign: TextAlign.end,
         )
       else
-        CircularProgressIndicator(),
+        SizedBox(
+          height: 24.0,
+          width: 24.0,
+          child: CircularProgressIndicator(strokeWidth: 2.0),
+        ),
     ]);
   });
 }
@@ -237,93 +242,96 @@ class _PlatformsChartState extends State<PlatformsChart> {
         margin: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 12.0),
         child: Column(children: [
           _headline('Platforms', total),
-          Row(mainAxisSize: MainAxisSize.min, children: [
-            Expanded(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 250,
-                    width: 250,
-                    child: PieChart(PieChartData(
-                      pieTouchData:
-                          PieTouchData(touchCallback: (pieTouchResponse) {
-                        setState(() {
-                          final desiredTouch = pieTouchResponse.touchInput
-                                  is! PointerExitEvent &&
-                              pieTouchResponse.touchInput is! PointerUpEvent;
-                          if (desiredTouch &&
-                              pieTouchResponse.touchedSection != null) {
-                            touchedIndex = pieTouchResponse
-                                .touchedSection!.touchedSectionIndex;
-                          } else {
-                            touchedIndex = -1;
-                          }
-                        });
-                      }),
-                      borderData: FlBorderData(show: false),
-                      sectionsSpace: 0,
-                      centerSpaceRadius: 0,
-                      sections: List.generate(platforms.length, (index) {
-                        final isTouched = index == touchedIndex;
-                        final fontSize = isTouched ? 20.0 : 16.0;
-                        final radius = isTouched ? 110.0 : 100.0;
-                        final badgeSize = isTouched ? 55.0 : 40.0;
+          if (total > 0)
+            Row(mainAxisSize: MainAxisSize.min, children: [
+              Expanded(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 250,
+                      width: 250,
+                      child: PieChart(PieChartData(
+                        pieTouchData:
+                            PieTouchData(touchCallback: (pieTouchResponse) {
+                          setState(() {
+                            final desiredTouch = pieTouchResponse.touchInput
+                                    is! PointerExitEvent &&
+                                pieTouchResponse.touchInput is! PointerUpEvent;
+                            if (desiredTouch &&
+                                pieTouchResponse.touchedSection != null) {
+                              touchedIndex = pieTouchResponse
+                                  .touchedSection!.touchedSectionIndex;
+                            } else {
+                              touchedIndex = -1;
+                            }
+                          });
+                        }),
+                        borderData: FlBorderData(show: false),
+                        sectionsSpace: 0,
+                        centerSpaceRadius: 0,
+                        sections: List.generate(platforms.length, (index) {
+                          final isTouched = index == touchedIndex;
+                          final fontSize = isTouched ? 20.0 : 16.0;
+                          final radius = isTouched ? 110.0 : 100.0;
+                          final badgeSize = isTouched ? 55.0 : 40.0;
 
-                        final String os = platforms.keys.toList()[index];
-                        final int used = platforms[os]!;
+                          final String os = platforms.keys.toList()[index];
+                          final int used = platforms[os]!;
 
-                        final usedPercentage = (100 / (total / used));
-                        return PieChartSectionData(
-                          color: colors[os],
-                          value: used.toDouble(),
-                          title:'${NumberFormat('###.##').format(usedPercentage)}%',
-                          radius: radius,
-                          titleStyle: TextStyle(fontSize: fontSize),
-                          badgeWidget: Tooltip(
-                            message: '${platforms[os]} sessions were registered on this platform',
-                            child: _Badge(
-                              child: Icon(icons[os], color: colors[os]),
-                              size: badgeSize,
-                              borderColor: const Color(0xfff8b250),
+                          final usedPercentage = (100 / (total / used));
+                          return PieChartSectionData(
+                            color: colors[os],
+                            value: used.toDouble(),
+                            title:
+                                '${NumberFormat('###.##').format(usedPercentage)}%',
+                            radius: radius,
+                            titleStyle: TextStyle(fontSize: fontSize),
+                            badgeWidget: Tooltip(
+                              message:
+                                  '${platforms[os]} sessions were registered on this platform',
+                              child: _Badge(
+                                child: Icon(icons[os], color: colors[os]),
+                                size: badgeSize,
+                                borderColor: const Color(0xfff8b250),
+                              ),
                             ),
-                          ),
-                          badgePositionPercentageOffset: .98,
-                        );
-                      }),
-                    )),
-                  )
-                ],
+                            badgePositionPercentageOffset: .98,
+                          );
+                        }),
+                      )),
+                    )
+                  ],
+                ),
               ),
-            ),
-            Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: List.generate(6, (index) {
-                final OSs = [
-                  'android',
-                  'ios',
-                  'macos',
-                  'windows',
-                  'linux',
-                  'web',
-                  null,
-                ];
-                final os = OSs[index] ?? 'other';
-                return Tooltip(
-                  message:
-                      '${platforms.containsKey(os) ? platforms[os] : 'No'} sessions were registered on this platform',
-                  child: Indicator(
-                    color: colors[os]!,
-                    text: os.firstLetterUpcased,
-                    textColor: Colors.white,
-                  ),
-                );
-              }),
-            ),
-          ]),
+              Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: List.generate(6, (index) {
+                  final OSs = [
+                    'android',
+                    'ios',
+                    'macos',
+                    'windows',
+                    'linux',
+                    'web',
+                    null,
+                  ];
+                  final os = OSs[index] ?? 'other';
+                  return Tooltip(
+                    message:
+                        '${platforms.containsKey(os) ? platforms[os] : 'No'} sessions were registered on this platform',
+                    child: Indicator(
+                      color: colors[os]!,
+                      text: os.firstLetterUpcased,
+                      textColor: Colors.white,
+                    ),
+                  );
+                }),
+              ),
+            ]),
         ]),
       ),
     );
