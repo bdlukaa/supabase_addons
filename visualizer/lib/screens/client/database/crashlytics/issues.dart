@@ -86,6 +86,37 @@ class _IssuesCardState extends State<IssuesCard> {
   Widget build(BuildContext context) {
     if (widget.errors == null) return const SizedBox.shrink();
 
+    if (widget.errors!.isEmpty) {
+      return Center(
+        child: SizedBox(
+          height: 500,
+          width: 500,
+          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            SelectableText(
+              'You have no issues reported until now!',
+              style: Theme.of(context).textTheme.headline5,
+              textAlign: TextAlign.center,
+            ),
+            Divider(),
+            SelectableText.rich(TextSpan(
+              text: 'That can mean two things: ',
+              children: [
+                TextSpan(
+                  text: 'the user is not dumb',
+                  style: TextStyle(color: Theme.of(context).primaryColor),
+                ),
+                TextSpan(text: ' or '),
+                TextSpan(
+                  text: 'you did a great job!',
+                  style: TextStyle(color: Theme.of(context).primaryColor),
+                ),
+              ],
+            ))
+          ]),
+        ),
+      );
+    }
+
     // TODO: this should be in another thread
     List<List<Map<String, dynamic>>> stackedErrors = [];
     for (final error in widget.errors!) {
@@ -124,40 +155,42 @@ class _IssuesCardState extends State<IssuesCard> {
       }
     }
 
-    return Card(
-      margin: const EdgeInsets.symmetric(vertical: 8.0),
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.all(10.0),
-        scrollDirection: Axis.horizontal,
-        child: DataTable(
-          sortColumnIndex: _currentSortColumn,
-          sortAscending: _isAscending,
-          showCheckboxColumn: false,
-          columns: [
-            const DataColumn(label: SizedBox.shrink()),
-            const DataColumn(label: SelectableText('Exception')),
-            const DataColumn(label: Text('Fatal')),
-            const DataColumn(label: Text('Version')),
-            DataColumn(
-              label: const SelectableText('Since'),
-              onSort: (column, ascending) {
-                setState(() {
-                  _isAscending = ascending;
-                  widget.errors!.sort((a, b) {
-                    final int timestampA = int.parse(a['timestamp']);
-                    final int timestampB = int.parse(b['timestamp']);
-                    if (ascending) {
-                      return timestampB.compareTo(timestampA);
-                    } else {
-                      return timestampA.compareTo(timestampB);
-                    }
+    return SingleChildScrollView(
+      child: Card(
+        margin: const EdgeInsets.symmetric(vertical: 8.0),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(10.0),
+          scrollDirection: Axis.horizontal,
+          child: DataTable(
+            sortColumnIndex: _currentSortColumn,
+            sortAscending: _isAscending,
+            showCheckboxColumn: false,
+            columns: [
+              const DataColumn(label: SizedBox.shrink()),
+              const DataColumn(label: Text('Exception')),
+              const DataColumn(label: Text('Fatal')),
+              const DataColumn(label: Text('Version')),
+              DataColumn(
+                label: const Text('Since'),
+                onSort: (column, ascending) {
+                  setState(() {
+                    _isAscending = ascending;
+                    widget.errors!.sort((a, b) {
+                      final int timestampA = int.parse(a['timestamp']);
+                      final int timestampB = int.parse(b['timestamp']);
+                      if (ascending) {
+                        return timestampB.compareTo(timestampA);
+                      } else {
+                        return timestampA.compareTo(timestampB);
+                      }
+                    });
                   });
-                });
-              },
-            ),
-            const DataColumn(label: SizedBox.shrink()),
-          ],
-          rows: _getRowsFromStackedErrors(stackedErrors),
+                },
+              ),
+              const DataColumn(label: SizedBox.shrink()),
+            ],
+            rows: _getRowsFromStackedErrors(stackedErrors),
+          ),
         ),
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:supabase/supabase.dart';
 
 import '../../../constants.dart';
@@ -76,31 +77,38 @@ class _CrashlyticsState extends State<Crashlytics> {
         ),
       );
     }
-    return ListView(padding: kListPadding, children: [
-      Row(children: [
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('Issues', style: Theme.of(context).textTheme.headline5),
-              Text(
-                'The issues found in your app',
+    return Padding(
+      padding: kListPadding,
+      child: Column(children: [
+        Row(children: [
+          Expanded(
+            child: SelectableText.rich(TextSpan(children: [
+              TextSpan(
+                text: 'Issues\n',
+                style: Theme.of(context).textTheme.headline5,
+              ),
+              TextSpan(
+                text: 'The issues found in your app',
                 style: Theme.of(context).textTheme.caption,
               ),
-            ],
+            ])),
           ),
-        ),
-        if (errors == null)
-          Center(
-            child: Container(
-              width: 24.0,
-              height: 24.0,
-              margin: EdgeInsets.only(right: 4.0),
-              child: CircularProgressIndicator.adaptive(strokeWidth: 2.0),
+          if (errors == null)
+            Center(
+              child: Container(
+                width: 24.0,
+                height: 24.0,
+                margin: EdgeInsets.only(right: 4.0),
+                child: CircularProgressIndicator.adaptive(strokeWidth: 2.0),
+              ),
+            )
+          else
+            SelectableText(
+              '${NumberFormat.compactLong().format(errors!.length)}',
             ),
-          ),
+        ]),
+        Expanded(child: IssuesCard(errors: errors)),
       ]),
-      IssuesCard(errors: errors),
-    ]);
+    );
   }
 }
