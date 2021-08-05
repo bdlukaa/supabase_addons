@@ -10,7 +10,6 @@ import '../../../../utils.dart';
 
 Widget _headline(String title, [int? total]) {
   return Builder(builder: (context) {
-    final formattedTotal = NumberFormat.compactLong().format(total);
     return Row(children: [
       Expanded(
         child: SelectableText(
@@ -19,10 +18,13 @@ Widget _headline(String title, [int? total]) {
         ),
       ),
       if (total != null)
-        SelectableText(
-          'Total of $formattedTotal sessions',
-          textAlign: TextAlign.end,
-        )
+        () {
+          final formattedTotal = NumberFormat.compactLong().format(total);
+          return SelectableText(
+            'Total of $formattedTotal sessions',
+            textAlign: TextAlign.end,
+          );
+        }()
       else
         SizedBox(
           height: 24.0,
