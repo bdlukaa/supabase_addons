@@ -93,6 +93,7 @@ class _CrashlyticsState extends State<Crashlytics> {
               ),
             ])),
           ),
+          // TODO: sorting. change the `since` time. It should default to 7 days back
           if (errors == null)
             Center(
               child: Container(
