@@ -80,7 +80,6 @@ class SupabaseCrashlyticsAddons {
     final info = {
       'reason': reason,
       'fatal': fatal,
-      'timestamp': DateTime.now().millisecondsSinceEpoch,
       'version': SupabaseAddons.appVersion,
       'os': operatingSystem,
       'country_code': getUserCountry(),
@@ -93,6 +92,7 @@ class SupabaseCrashlyticsAddons {
       'exception': exception.toString(),
       'stacktraceelements': stackTraceElements,
       'info': info,
+      'timestamp': DateTime.now().millisecondsSinceEpoch,
     }).execute();
 
     if (result.error != null) {

@@ -177,9 +177,10 @@ Create a table called `crashlytics` on the database:
 
 ```sql
 create table public.crashlytics (
+  id uuid DEFAULT gen_random_uuid() primary key not null,
   exception text not null,
   stackTraceElements json,
-  timestamp text,
+  timestamp text not null,
   info json
 );
 ```
