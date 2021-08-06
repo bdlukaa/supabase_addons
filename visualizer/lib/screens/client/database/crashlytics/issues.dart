@@ -19,11 +19,11 @@ class _IssuesCardState extends State<IssuesCard> {
   bool _isAscending = false;
 
   List<DataRow> _getRowsFromStackedErrors(
-    List<Iterable<Map<String, dynamic>>> stackederrors,
+    Map<String, List<Map<String, dynamic>>> stackederrors,
   ) {
     final List<DataRow> rows = [];
 
-    for (final serrorlist in stackederrors) {
+    for (final serrorlist in stackederrors.values) {
       // safe to call .first cuz there are no empty lists inside
       final error = serrorlist.first;
       final firstElement = error['stacktraceelements'].first;
@@ -40,7 +40,7 @@ class _IssuesCardState extends State<IssuesCard> {
               shape: BoxShape.circle,
             ),
             child: Text(
-              '${stackederrors.length}',
+              '${serrorlist.length}',
               style: TextStyle(color: Colors.black, fontSize: 14.0),
             ),
           )),
@@ -118,39 +118,18 @@ class _IssuesCardState extends State<IssuesCard> {
     }
 
     // TODO: this should be in another thread
-    List<List<Map<String, dynamic>>> stackedErrors = [];
+    Map<String, List<Map<String, dynamic>>> stackedErrors = {};
     for (final error in widget.errors!) {
       // if there are no errors stacked, add the first
       if (stackedErrors.length == 0) {
-        stackedErrors.add([error]);
+        stackedErrors.addAll({
+          error['exception']: [error],
+        });
       } else {
-        /// A list of functions that will be executed when the iterators
-        /// stop iterating. This is necessary because we can't add an item
-        /// to a list while it's being iterated
-        List<Function()> toBeExecuted = [];
-        // since it's not empty, we iterate trough it
-        for (final serrorlist in stackedErrors) {
-          final serrorlistindex = stackedErrors.indexOf(serrorlist);
-          // and then we iterate trough the inner lists
-          for (final serror in serrorlist) {
-            print(serror);
-            // final listindex = serrorlist.indexOf(serror);
-            // if exceptions are the same, stack them on the same list
-            if (serror['exception'].toString().trim() ==
-                error['exception'].toString().trim()) {
-              toBeExecuted.add(() {
-                stackedErrors[serrorlistindex].add(error);
-              });
-            } else {
-              // otherwise, create a new list to be stacked
-              toBeExecuted.add(() {
-                stackedErrors[serrorlistindex].add(error);
-              });
-            }
-          }
-        }
-        for (final function in toBeExecuted) {
-          function();
+        if (stackedErrors.containsKey(error['exception'])) {
+          stackedErrors[error['exception']]!.add(error);
+        } else {
+          stackedErrors[error['exception']] = [error];
         }
       }
     }
@@ -189,7 +168,7 @@ class _IssuesCardState extends State<IssuesCard> {
               ),
               const DataColumn(label: SizedBox.shrink()),
             ],
-            rows: _getRowsFromStackedErrors(stackedErrors),
+            rows: _getRowsFromStackedErrors(stackedErrors)
           ),
         ),
       ),
