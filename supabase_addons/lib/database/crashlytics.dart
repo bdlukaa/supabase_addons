@@ -1,6 +1,7 @@
 import 'package:stack_trace/stack_trace.dart';
 
 import '../supabase_addons.dart';
+import '../utils.dart';
 
 /// Crashlytics is a crash reporter that helps you track,
 /// prioritize, and fix stability issues that erode your
@@ -58,6 +59,7 @@ class SupabaseCrashlyticsAddons {
     String? reason,
     bool fatal = false,
     bool printDetails = true,
+    Map<String, dynamic>? moreInfo,
   }) async {
     if (printDetails) {
       print('----------------CRASHLYTICS----------------');
@@ -75,13 +77,22 @@ class SupabaseCrashlyticsAddons {
 
     final stackTraceElements = _getStackTraceElements(stack);
 
-    final result = await SupabaseAddons.client.from(tableName).insert({
-      'exception': exception.toString(),
-      'stacktraceelements': stackTraceElements,
+    final info = {
       'reason': reason,
       'fatal': fatal,
       'timestamp': DateTime.now().millisecondsSinceEpoch,
       'version': SupabaseAddons.appVersion,
+      'os': operatingSystem,
+      'country_code': getUserCountry(),
+      if (moreInfo != null && !moreInfo.containsKey('user_id'))
+        'user_id': SupabaseAuthAddons.auth.currentUser?.id,
+      if (moreInfo != null) ...moreInfo,
+    };
+
+    final result = await SupabaseAddons.client.from(tableName).insert({
+      'exception': exception.toString(),
+      'stacktraceelements': stackTraceElements,
+      'info': info,
     }).execute();
 
     if (result.error != null) {

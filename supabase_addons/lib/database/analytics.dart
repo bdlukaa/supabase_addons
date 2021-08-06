@@ -93,7 +93,7 @@ class SupabaseAnalyticsAddons {
 
     params ??= {};
     params.addAll({
-      'country_code': userCountry ?? _getUserCountry(),
+      'country_code': userCountry ?? getUserCountry(),
       'os': operatingSystem,
     });
 
@@ -272,14 +272,5 @@ class SupabaseAnalyticsAddons {
     return logEvent(name: 'select_item', params: {
       'item': item,
     });
-  }
-
-  static String? _getUserCountry() {
-    final splitList = SupabaseAddons.systemLocale.split('_');
-    String? country_code;
-    if (splitList.length >= 2) {
-      country_code = splitList[1].toLowerCase();
-    }
-    return country_code;
   }
 }
