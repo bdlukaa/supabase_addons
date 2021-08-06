@@ -105,7 +105,6 @@ class CrashlyticsState extends State<Crashlytics> {
               ),
             ])),
           ),
-
           Container(
             margin: EdgeInsets.only(right: 12.0),
             padding: EdgeInsets.only(left: 8.0),
@@ -123,36 +122,16 @@ class CrashlyticsState extends State<Crashlytics> {
                   }
                 },
                 items: [
-                  DropdownMenuItem(
-                    child: Text('since today'),
-                    value: 0,
-                  ),
-                  DropdownMenuItem(
-                    child: Text('since 7 days ago'),
-                    value: 1,
-                  ),
-                  DropdownMenuItem(
-                    child: Text('since 14 days ago'),
-                    value: 2,
-                  ),
-                  DropdownMenuItem(
-                    child: Text('since 30 days ago'),
-                    value: 3,
-                  ),
-                  DropdownMenuItem(
-                    child: Text('since 6 months ago'),
-                    value: 4,
-                  ),
-                  DropdownMenuItem(
-                    child: Text('since a year ago'),
-                    value: 5,
-                  ),
+                  DropdownMenuItem(child: Text('since today'), value: 0),
+                  DropdownMenuItem(child: Text('since 7 days ago'), value: 1),
+                  DropdownMenuItem(child: Text('since 14 days ago'), value: 2),
+                  DropdownMenuItem(child: Text('since 30 days ago'), value: 3),
+                  DropdownMenuItem(child: Text('since 6 months ago'), value: 4),
+                  DropdownMenuItem(child: Text('since a year ago'), value: 5),
                 ],
               ),
             ),
           ),
-
-          // TODO: sorting. change the `since` time. It should default to 7 days back
           if (errors == null)
             Center(
               child: Container(
@@ -163,8 +142,12 @@ class CrashlyticsState extends State<Crashlytics> {
               ),
             )
           else
-            SelectableText(
-              '${NumberFormat.compactLong().format(errors!.length)}',
+            Container(
+              width: 24.0,
+              height: 24.0,
+              child: SelectableText(
+                '${NumberFormat.compactLong().format(errors!.length)}',
+              ),
             ),
         ]),
         Expanded(child: IssuesCard(errors: errors)),

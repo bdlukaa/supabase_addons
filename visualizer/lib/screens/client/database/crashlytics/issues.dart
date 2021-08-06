@@ -60,8 +60,11 @@ class _IssuesCardState extends State<IssuesCard> {
               TextSpan(text: ' ln ${firstElement['line']}'),
             ]),
           )),
-          DataCell(Text(error['fatal'] ? 'Yes' : 'No')),
-          DataCell(Text(error['version'] ?? 'Not specified')),
+          DataCell(Text(error['fatal'] ?? false ? 'Yes' : 'No')),
+          DataCell(Text(serrorlist.firstWhere(
+            (element) => element['version'] != null,
+            orElse: () => {'version': 'Not specified'},
+          )['version'])),
           DataCell(Text(DateFormat.MMMMEEEEd().format(date))),
           DataCell(
             IconButton(
@@ -168,7 +171,7 @@ class _IssuesCardState extends State<IssuesCard> {
               ),
               const DataColumn(label: SizedBox.shrink()),
             ],
-            rows: _getRowsFromStackedErrors(stackedErrors)
+            rows: _getRowsFromStackedErrors(stackedErrors),
           ),
         ),
       ),

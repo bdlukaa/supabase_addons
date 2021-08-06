@@ -21,13 +21,14 @@ dependencies:
   country_provider: ^1.0.2
   flag: ^5.0.1
   # Supabase and others
-  supabase: ^0.0.7
+  supabase: ^0.0.8
   intl: ^0.17.0
+  version: ^2.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_native_splash: ^1.2.0
+  flutter_native_splash: ^1.2.1
 
 flutter:
   uses-material-design: true
