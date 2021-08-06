@@ -1,3 +1,7 @@
+## 0.0.7
+
+- Updated crashlytics
+
 ## 0.0.6
 
 - Fixed `getSystemLocale()`
