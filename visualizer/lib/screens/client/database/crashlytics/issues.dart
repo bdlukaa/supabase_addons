@@ -5,6 +5,8 @@ import 'package:supabase/supabase.dart';
 
 import 'package:visualizer/models/session.dart';
 
+import 'error_dialog.dart';
+
 class IssuesCard extends StatefulWidget {
   const IssuesCard({Key? key, required this.errors}) : super(key: key);
 
@@ -31,7 +33,14 @@ class _IssuesCardState extends State<IssuesCard> {
       final date =
           DateTime.fromMillisecondsSinceEpoch(int.parse(error['timestamp']));
       final datarow = DataRow(
-        onSelectChanged: (_) {},
+        onSelectChanged: (_) {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return ErrorDialog(errors: serrorlist);
+            }
+          );
+        },
         cells: [
           DataCell(Container(
             padding: EdgeInsets.all(4.0),
