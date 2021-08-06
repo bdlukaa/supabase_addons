@@ -179,6 +179,7 @@ Create a table called `crashlytics` on the database:
 create table public.crashlytics (
   exception text not null,
   stackTraceElements json,
+  timestamp text,
   info json
 );
 ```
