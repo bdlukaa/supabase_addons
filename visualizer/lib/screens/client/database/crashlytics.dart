@@ -16,6 +16,17 @@ class Crashlytics extends StatefulWidget {
 }
 
 class CrashlyticsState extends State<Crashlytics> {
+  static List<DateTime> times = [
+    DateTime.now().subtract(Duration(days: 1)),
+    DateTime.now().subtract(Duration(days: 7)),
+    DateTime.now().subtract(Duration(days: 14)),
+    DateTime.now().subtract(Duration(days: 30)),
+    DateTime.now().subtract(Duration(days: 30 * 6)),
+    DateTime.now().subtract(Duration(days: 30 * 12)),
+  ];
+
+  int since = 1;
+
   List<Map<String, dynamic>>? errors;
   dynamic error;
 
@@ -29,9 +40,7 @@ class CrashlyticsState extends State<Crashlytics> {
 
   void loadData() {
     setState(() => errors = error = null);
-    getData(
-      DateTime.now().subtract(Duration(days: 7)),
-    ).then((value) {
+    getData(times[since]).then((value) {
       if (mounted) setState(() => errors = value);
     }).catchError((error) {
       if (mounted) setState(() => this.error = error);
@@ -96,6 +105,53 @@ class CrashlyticsState extends State<Crashlytics> {
               ),
             ])),
           ),
+
+          Container(
+            margin: EdgeInsets.only(right: 12.0),
+            padding: EdgeInsets.only(left: 8.0),
+            decoration: BoxDecoration(
+              color: Theme.of(context).cardColor,
+              borderRadius: BorderRadius.circular(4.0),
+            ),
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton<int>(
+                value: since,
+                onChanged: (value) {
+                  if (value != null && since != value) {
+                    since = value;
+                    loadData();
+                  }
+                },
+                items: [
+                  DropdownMenuItem(
+                    child: Text('since today'),
+                    value: 0,
+                  ),
+                  DropdownMenuItem(
+                    child: Text('since 7 days ago'),
+                    value: 1,
+                  ),
+                  DropdownMenuItem(
+                    child: Text('since 14 days ago'),
+                    value: 2,
+                  ),
+                  DropdownMenuItem(
+                    child: Text('since 30 days ago'),
+                    value: 3,
+                  ),
+                  DropdownMenuItem(
+                    child: Text('since 6 months ago'),
+                    value: 4,
+                  ),
+                  DropdownMenuItem(
+                    child: Text('since a year ago'),
+                    value: 5,
+                  ),
+                ],
+              ),
+            ),
+          ),
+
           // TODO: sorting. change the `since` time. It should default to 7 days back
           if (errors == null)
             Center(
