@@ -249,9 +249,9 @@ class SupabaseAnalyticsAddons {
   }
 
   /// Search event
-  /// 
+  ///
   /// `term`: The search string/keywords used
-  /// 
+  ///
   /// `params`: contextualize search operations by supplying the appropriate params
   static Future<void> logSearch({
     required String term,
@@ -266,11 +266,9 @@ class SupabaseAnalyticsAddons {
   /// Select Item event. This event signifies that an item was selected by a user
   /// from a list. Use the appropriate parameters to contextualize the event. Use
   /// this event to discover the most popular items selected.
-  /// 
+  ///
   /// `item`: the item identifier
-  static Future<void> logSelectItem({
-    required String item
-  }) {
+  static Future<void> logSelectItem({required String item}) {
     return logEvent(name: 'select_item', params: {
       'item': item,
     });

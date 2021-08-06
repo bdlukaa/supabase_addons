@@ -12,20 +12,23 @@ class Crashlytics extends StatefulWidget {
   const Crashlytics({Key? key}) : super(key: key);
 
   @override
-  _CrashlyticsState createState() => _CrashlyticsState();
+  CrashlyticsState createState() => CrashlyticsState();
 }
 
-class _CrashlyticsState extends State<Crashlytics> {
+class CrashlyticsState extends State<Crashlytics> {
   List<Map<String, dynamic>>? errors;
   dynamic error;
 
   @override
   void initState() {
     super.initState();
-    loadData();
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      loadData();
+    });
   }
 
   void loadData() {
+    setState(() => errors = error = null);
     getData(
       DateTime.now().subtract(Duration(days: 7)),
     ).then((value) {

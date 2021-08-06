@@ -17,6 +17,8 @@ class Root extends StatefulWidget {
 }
 
 class _RootState extends State<Root> {
+  final loggedClientKey = GlobalKey<LoggedClientState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,13 +65,14 @@ class _RootState extends State<Root> {
           ),
           if (hasClient) ...[
             const VerticalDivider(indent: 10.0, endIndent: 10.0),
-            // TODO: get Refresh button working
-            // IconButton(
-            //   icon: Icon(Icons.refresh),
-            //   onPressed: () {},
-            //   tooltip: 'Refresh',
-            //   splashRadius: 20.0,
-            // ),
+            IconButton(
+              icon: Icon(Icons.refresh),
+              onPressed: () {
+                loggedClientKey.currentState?.reload();
+              },
+              tooltip: 'Refresh',
+              splashRadius: 20.0,
+            ),
             Container(
               alignment: Alignment.center,
               margin: EdgeInsets.symmetric(horizontal: 10.0),
@@ -84,45 +87,47 @@ class _RootState extends State<Root> {
         ],
       ),
       body: () {
-        if (hasClient) return LoggedClient();
+        if (hasClient) return LoggedClient(key: loggedClientKey);
         return Row(children: [
           Expanded(child: LogIn(onUpdate: () => setState(() {}))),
           const VerticalDivider(),
           const Expanded(child: IntroductionScreen()),
         ]);
       }(),
-      bottomNavigationBar: Container(
+      bottomNavigationBar: SizedBox(
         height: 40.0,
-        color: const Color(0xFF818cf8),
-        child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-          const SizedBox(width: 26.0),
-          Link(
-            uri: Uri.parse(discordLink),
-            builder: (context, followLink) => ElevatedButton.icon(
-              icon: const Icon(Icons.arrow_back, size: 18.0),
-              label: const Text('Join my discord server'),
-              onPressed: followLink,
-              style: ElevatedButton.styleFrom(
-                primary: Color(0xFF312e81),
-                visualDensity: VisualDensity.compact,
+        child: Material(
+          color: const Color(0xFF818cf8),
+          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            const SizedBox(width: 26.0),
+            Link(
+              uri: Uri.parse(discordLink),
+              builder: (context, followLink) => ElevatedButton.icon(
+                icon: const Icon(Icons.arrow_back, size: 18.0),
+                label: const Text('Join my discord server'),
+                onPressed: followLink,
+                style: ElevatedButton.styleFrom(
+                  primary: Color(0xFF312e81),
+                  visualDensity: VisualDensity.compact,
+                ),
               ),
             ),
-          ),
-          const VerticalDivider(),
-          Link(
-            uri: Uri.parse(supabaseDiscordLink),
-            target: LinkTarget.blank,
-            builder: (context, followLink) => ElevatedButton(
-              child: Row(children: [
-                const Text('Join Supabase Discord server'),
-                const SizedBox(width: 4.0),
-                const Icon(Icons.arrow_forward, size: 18.0)
-              ]),
-              onPressed: followLink,
-              style: ButtonStyle(visualDensity: VisualDensity.compact),
+            const VerticalDivider(),
+            Link(
+              uri: Uri.parse(supabaseDiscordLink),
+              target: LinkTarget.blank,
+              builder: (context, followLink) => ElevatedButton(
+                child: Row(children: [
+                  const Text('Join Supabase Discord server'),
+                  const SizedBox(width: 4.0),
+                  const Icon(Icons.arrow_forward, size: 18.0)
+                ]),
+                onPressed: followLink,
+                style: ButtonStyle(visualDensity: VisualDensity.compact),
+              ),
             ),
-          ),
-        ]),
+          ]),
+        ),
       ),
     );
   }

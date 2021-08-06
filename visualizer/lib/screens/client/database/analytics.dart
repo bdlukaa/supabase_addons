@@ -12,20 +12,23 @@ class AnalyticsScreen extends StatefulWidget {
   const AnalyticsScreen({Key? key}) : super(key: key);
 
   @override
-  _AnalyticsScreenState createState() => _AnalyticsScreenState();
+  AnalyticsScreenState createState() => AnalyticsScreenState();
 }
 
-class _AnalyticsScreenState extends State<AnalyticsScreen> {
+class AnalyticsScreenState extends State<AnalyticsScreen> {
   List<Map<String, dynamic>>? user_session;
   dynamic error;
 
   @override
   void initState() {
     super.initState();
-    loadData();
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      loadData();
+    });
   }
 
   void loadData() {
+    setState(() => user_session = error = null);
     getData(
       'user_session',
       DateTime.now().subtract(Duration(days: 7)),

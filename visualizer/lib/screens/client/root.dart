@@ -10,31 +10,63 @@ class LoggedClient extends StatefulWidget {
   const LoggedClient({Key? key}) : super(key: key);
 
   @override
-  _LoggedClientState createState() => _LoggedClientState();
+  LoggedClientState createState() => LoggedClientState();
 }
 
-class _LoggedClientState extends State<LoggedClient> {
+class LoggedClientState extends State<LoggedClient>
+    with SingleTickerProviderStateMixin {
+  late TabController tabController;
+
+  final analyticsKey = GlobalKey<AnalyticsScreenState>();
+  final crashlyticsKey = GlobalKey<CrashlyticsState>();
+
+  @override
+  void initState() {
+    super.initState();
+    tabController = TabController(
+      length: 3,
+      vsync: this,
+    );
+  }
+
+  @override
+  void dispose() {
+    tabController.dispose();
+    super.dispose();
+  }
+
+  void reload() {
+    switch (tabController.index) {
+      case 0:
+        // handle analytics reloading
+        analyticsKey.currentState?.loadData();
+        break;
+      case 1:
+        crashlyticsKey.currentState?.loadData();
+        // handle crashlytics reloading
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 3,
-      child: Column(children: [
-        TabBar(
-          tabs: [
-            Tab(text: 'Analytics'),
-            Tab(text: 'Crashlytics'),
-            Tab(text: 'Performance'),
-          ],
-        ),
-        Expanded(
-          child: TabBarView(children: [
-            AnalyticsScreen(),
-            Crashlytics(),
-            Performance(),
-          ]),
-        ),
-      ]),
-    );
+    return Column(children: [
+      TabBar(
+        controller: tabController,
+        tabs: [
+          Tab(text: 'Analytics'),
+          Tab(text: 'Crashlytics'),
+          Tab(text: 'Performance'),
+        ],
+      ),
+      Expanded(
+        child: TabBarView(controller: tabController, children: [
+          AnalyticsScreen(key: analyticsKey),
+          Crashlytics(key: crashlyticsKey),
+          Performance(),
+        ]),
+      ),
+    ]);
   }
 }
 
@@ -45,8 +77,8 @@ Widget buildSomethingWentWrong([PostgrestError? error]) {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Icon(Icons.bug_report),
-          SizedBox(width: 4.0),
+          const Icon(Icons.bug_report),
+          const SizedBox(width: 4.0),
           SelectableText(
             'Something went wrong',
             style: Theme.of(context).textTheme.headline5,
