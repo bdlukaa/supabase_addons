@@ -21,7 +21,8 @@ void main() async {
       print('User found on the storage.');
     }
 
-    // throw 'test crashlytics';
+    // un(comment) the following line to disable the crashlytics testing
+    throw 'test crashlytics';
 
     // Dipose the addons
   }, (error, stacktrace) {

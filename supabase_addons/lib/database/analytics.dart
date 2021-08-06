@@ -83,7 +83,7 @@ class SupabaseAnalyticsAddons {
   /// A [PostgrestError] is thrown if the event fails
   static Future<void> logEvent({
     required String name,
-    Map<String, dynamic> params = const {},
+    Map<String, dynamic>? params,
     String? userId,
   }) async {
     assert(
@@ -91,6 +91,7 @@ class SupabaseAnalyticsAddons {
       'The name must be at least 2 characters long',
     );
 
+    params ??= {};
     params.addAll({
       'country_code': userCountry ?? _getUserCountry(),
       'os': operatingSystem,

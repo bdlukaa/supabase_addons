@@ -1,6 +1,6 @@
 name: supabase_addons
 description: Addons to supabase dart (and Flutter), to make development easier.
-version: 0.0.5
+version: 0.0.6
 repository: https://github.com/bdlukaa/supabase_addons
 
 environment:

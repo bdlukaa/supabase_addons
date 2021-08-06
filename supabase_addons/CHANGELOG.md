@@ -1,3 +1,8 @@
+## 0.0.6
+
+- Fixed `getSystemLocale()`
+- Fixed logging in analytics
+
 ## 0.0.5
 
 - New built-in methods in analytics:
