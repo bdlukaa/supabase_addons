@@ -69,11 +69,11 @@ class _IssuesCardState extends State<IssuesCard> {
               TextSpan(text: ' ln ${firstElement['line']}'),
             ]),
           )),
-          DataCell(Text(error['fatal'] ?? false ? 'Yes' : 'No')),
+          DataCell(Text(error['info']['fatal'] ?? false ? 'Yes' : 'No')),
           DataCell(Text(serrorlist.firstWhere(
-            (element) => element['version'] != null,
-            orElse: () => {'version': 'Not specified'},
-          )['version'])),
+            (element) => element['info']['version'] != null,
+            orElse: () => {'info': {'version': 'Not specified'}},
+          )['info']['version'])),
           DataCell(Text(DateFormat.MMMMEEEEd().format(date))),
           DataCell(
             IconButton(
